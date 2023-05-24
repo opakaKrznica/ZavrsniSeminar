@@ -1,0 +1,141 @@
+﻿@page "/Admin/files-update/{id:int}"
+@inject HttpClient Http
+@using System.IO
+@using Expert.WebShop.Vjezbe.models;
+@inject NavigationManager navManager;
+
+
+<!--<div class="container-md Width ">
+
+    <div class="bg-warning text-dark font-weight-bolder p-3 d-flex justify-content-between">
+
+        <h2 class="pt-3 ">Update files</h2>
+        <button type="button" class="btn-secondary rounded-2 m-3 p-2 " @onclick="Return">
+            Back to products
+        </button>
+    </div>
+
+    <form class="d-flex justify-content-around align-items-center bg-secondary bg-gradient" style="height:120px;">
+    <div @onsubmit="OnSubmit">
+        <InputFile OnChange="OnInputFileChange" multiple />
+
+        <button class="bg-warning text-dark" type="submit">Upload Selected File(s)</button>
+    </div>
+    </form>
+</div>-->
+<div class="container-md Width "
+
+      <nav class="navbar bg-warning bg-gradient  p-2 d-flex justify-content-around sticky-top">
+
+           <h2 class="pt-2 ">Update files</h2>
+
+             <button type="button" class="btn-secondary rounded-2 m-3 p-2 " @onclick="Return">
+               Back to products
+           </button>
+      </nav>
+
+    <div class="flex-column justify-content-between align-items-center bg-secondary bg-gradient">
+
+        <form class="d-md-flex justify-content-around align-items-center  pt-5"  @onsubmit="OnSubmit">
+            <div >
+                <InputFile OnChange="OnInputFileChange" multiple class="fs-5"/>
+            </div>
+
+                 <br /><br /><br />
+              <button class=" bg-warning text-dark fs-5 p-2" type="submit">Upload Selected File(s)</button>
+
+
+        </form>
+
+        <div class="d-flex justify-content-around align-items-center m-4 h4"> Uploaded Images</div>
+
+       <div>
+            @{
+                var images = productImages.Where(x => x.ProductId == product.Id).ToList();
+                foreach (var image in images)
+                {
+               <img class="card-img-top img-thumbnail mx-auto d-block w-75 " src=@image.imagePath alt="neka slika..">
+                }
+            }
+
+        </div>
+   </div>
+</div>
+@code {
+    [Parameter]
+    public int Id { get; set; }
+    string Message = "No file(s) selected";
+    private Products product = new Products();
+    private List<ImageFilePath> productImages = new List<ImageFilePath>();
+
+    IReadOnlyList<IBrowserFile> selectedFiles;
+
+
+    private void OnInputFileChange
+    (InputFileChangeEventArgs e)
+    {
+        selectedFiles = e.GetMultipleFiles();
+        Message = $"{selectedFiles.Count} file(s) selected";
+        this.StateHasChanged();
+    }
+
+    private async void OnSubmit()
+    {
+        foreach (var file in selectedFiles)
+        {
+            Stream stream = file.OpenReadStream();
+            MemoryStream ms = new MemoryStream();
+            await stream.CopyToAsync(ms);
+            stream.Close();
+
+            UploadedFiles uploadFile = new UploadedFiles();
+            uploadFile.FileName = file.Name;
+            uploadFile.ProductId = Id;
+            uploadFile.FileContent = ms.ToArray();
+            ms.Close();
+
+            var upload = await Http.PostAsJsonAsync<UploadedFiles>
+    ("https://expertshopapi.azurewebsites.net/api/FileUpload", uploadFile);
+
+            if (upload.IsSuccessStatusCode)
+            {
+                var a = "test";
+            }
+        }
+        Message = $"{selectedFiles.Count} file(s) uploaded on server";
+        this.StateHasChanged();
+    }
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        var result = await Http.GetAsync($"https://expertshopapi.azurewebsites.net/api/Products/{Id}");
+
+        if (result.IsSuccessStatusCode)
+        {
+            product = await result.Content.ReadFromJsonAsync<Products>();
+
+
+            var getImg = await GetImages(product.Id);
+            productImages.AddRange(getImg);
+
+        }
+    }
+
+    public async Task<List<ImageFilePath>> GetImages(int Id)
+    {
+        var apiResult = await Http.GetAsync($"https://expertshopapi.azurewebsites.net/api/FileUpload/GetProductPhotos/{Id}");
+        var images = new List<ImageFilePath>();
+        if (apiResult.IsSuccessStatusCode)
+        {
+            images = await apiResult.Content.ReadFromJsonAsync<List<ImageFilePath>>();
+        }
+        return images;
+    }
+
+    private async void Return()
+    {
+        navManager.NavigateTo("Admin/product-list");
+    }
+
+}

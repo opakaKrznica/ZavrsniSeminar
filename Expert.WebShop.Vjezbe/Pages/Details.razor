@@ -1,0 +1,79 @@
+﻿@page "/product-details/{id:int}"
+@inject HttpClient httpClient;
+@inject NavigationManager navManager;
+@inject ShoppingCartInMemory shoppingCart;
+@using Expert.WebShop.Vjezbe.models;
+
+
+<div class="container-fluid px-0 w-75 bg-secondary bg-gradient">
+
+    <section class="bg-success d-flex justify-content-between">
+       <h2 class=" text-light  p-3">Details</h2>
+
+        <button type="button" class="btn-secondary  rounded-2 m-3 p-2 " @onclick="()=>Return(category.Id, category.CategoryName)">
+        Go Back
+       </button>
+
+    </section>
+
+    <section class=" pb-4 d-flex justify-content-center p-4">
+    <div class="card  text-center text-dark  my-3" style="width: 32rem">
+        <div class="card-body">
+                <h3 class="card-title bg-success text-light border-dark border-bottom border-end border-2 rounded-2 p-2">
+                 @productDetails.ProductName
+            </h3>
+            <br /><br />
+            <p class="card-text fs-4">
+                Description : @productDetails.ProductDescription
+            </p>
+            <br />
+            <p class="card-text fs-4">
+                Unit Price : @productDetails.ProductPrice Eur
+            </p>
+            <br />
+            <p class="card-text fs-4">
+                Discount : @productDetails.Discount  %
+            </p>
+            <br />
+            <button class="btn btn-success p-3 fs-5" @onclick="()=>shoppingCart.AddToShoppingCart(productDetails.Id, navManager)">Dodaj u košaricu</button>
+
+        </div>
+    </div>
+    </section>
+</div>
+
+
+@code {
+    [Parameter]
+    public int Id { get; set; }
+    private Products productDetails = new Products();
+    private Category category = new Category();
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        var result = await httpClient.GetAsync($"https://expertshopapi.azurewebsites.net/api/Products/{Id}");
+        if (result.IsSuccessStatusCode)
+        {
+            productDetails = await result.Content.ReadFromJsonAsync<Products>();
+        }
+    }
+
+
+    public async Task<Category> GetCategory(int categoryId)
+    {
+        var result = await httpClient.GetAsync($"https://expertshopapi.azurewebsites.net/api/Categories/{Id}");
+        if (result.IsSuccessStatusCode)
+        {
+            category = await result.Content.ReadFromJsonAsync<Category>();
+        }
+        return category;
+    }
+
+    private async void Return(int id, string CategoryName)
+    {
+        navManager.NavigateTo($"/category/{id}/{CategoryName}");
+    }
+
+
+}

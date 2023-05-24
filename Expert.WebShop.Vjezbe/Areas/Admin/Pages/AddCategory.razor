@@ -1,0 +1,97 @@
+﻿@page "/Admin/add-category"
+@using Expert.WebShop.Vjezbe.models;
+@inject HttpClient httpClient;
+@inject NavigationManager navManager;
+
+
+
+
+
+
+
+
+<div class="container-md Width ">
+
+    <div class="bg-info text-dark text-center p-3">
+        <h3>Add Category</h3>
+    </div>
+
+    @if (IsError)
+    {
+        <div class="text-dark text-center p-3 h4">
+            Upps! dogodila se greška. Pokušajete ponovo.
+        </div>
+
+    }
+
+    <form @onsubmit="CategoryAdd">
+        <div class="container bg-secondary bg-gradient text-light p-4 ">
+
+            <div class="input-group mb-3">
+                <span class="input-group-text" id="inputGroup-sizing-default">Category Id :</span>
+                <input type="text" @bind-value="category.Id" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+            </div>
+
+            <div class="input-group mb-3">
+                <span class="input-group-text" id="inputGroup-sizing-default">Name :</span>
+                <input type="text" @bind-value="category.CategoryName" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+            </div>
+
+            <div class="input-group mb-3 ">
+                <span class="input-group-text" id="inputGroup-sizing-default">Description :</span>
+                <input type="text" @bind-value="category.CategoryDescription" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+            </div>
+
+            <div class="col-12 pt-3">
+                <div class="form-check">
+                    <input class="form-check-input" @bind-value="category.IsHidden" type="checkbox" id="inlineCheckbox1">
+                    <label class="form-check-label" for="inlineCheckbox1">It is hidden!</label>
+                </div>
+
+
+                <div class="col-6">
+                    <input type="url" @bind-value="category.ImagePath" class="form-control" placeholder="Choose Imgage" id="ImagePath">
+                </div>
+                                
+                <div class="d-flex justify-content-between pt-3">
+                    <button type="submit" class="btn-info rounded-2 border-dark border-bottom border-end border-2 p-2">Add New</button>
+                                       
+                    <button type="button" class="btn-info rounded-2 border-dark border-bottom border-end border-2 p-2" @onclick="Return">
+                        Go Back
+                    </button>
+                </div>
+            </div>
+        </div>
+
+    </form>
+</div>
+
+
+
+@code {
+    private Category category = new Category();
+    private bool IsError = false;
+
+    private async Task CategoryAdd()
+    {
+        var result = await httpClient.PostAsJsonAsync("https://expertshopapi.azurewebsites.net/api/Categories" , category);
+
+        if (result.IsSuccessStatusCode)
+        {
+            navManager.NavigateTo("Admin/category-list");
+        }
+        else
+        {
+            IsError = true;
+            StateHasChanged();
+        }
+    }
+
+  
+
+    private async void Return()
+    {
+        navManager.NavigateTo("/Admin/category-list");
+    }
+
+}

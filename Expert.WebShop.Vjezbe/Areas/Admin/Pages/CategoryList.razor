@@ -1,0 +1,98 @@
+﻿@page "/Admin/category-list"
+@using Expert.WebShop.Vjezbe.models;
+@inject HttpClient httpClient;
+@inject NavigationManager navManager;
+
+<div class="container-md Width">
+
+    <nav class="navbar bg-info  p-2 d-flex justify-content-around sticky-top">
+
+        <h2 class="pt-2 text-center pe-md-5 fs-2 ">Category List</h2>
+
+        <div class="my-auto d-flex justify-content-between m-2 pe-md-5">
+
+            <button type="button" @onclick="AddCategory" class="btn-secondary border-dark border-bottom
+                     border-end border-2 rounded-2 p-2 m-2">
+                Add New
+            </button>
+
+            <button type="button" class="btn-secondary rounded-2 border-dark border-bottom
+                    border-end border-2 rounded-2 p-2 m-2" @onclick="Return">
+                Go Back
+            </button>
+        </div>
+    </nav>
+
+    <section class="d-flex justify-content-center bg-secondary bg-gradient ">
+        <ul class="list-unstyled  p-5 text-center">
+            @foreach (Category item in categories)   //ovdje ide inace  var umjesto category,dodje isto
+            {
+                <li class="pt-3">
+                    <div class="container">
+
+                        <div class="card p-sm-3">
+
+                            <img class="card-img-top img-thumbnail mx-auto d-block w-75" src=@item.ImagePath alt="neka slika..">
+
+                            <div class="card-body ">
+
+                                <p class="card-title h5">
+                                  ID: @item.Id
+                                </p>
+
+                                <h5 class="card-title h2">
+                                    @item.CategoryName
+                                </h5>
+
+                                <p class="card-text">
+                                    @item.CategoryDescription
+                                </p>
+                                <div class="d-flex justify-content-around">
+                                    <button type="button" @onclick="()=>EditCategory(item.Id)" class="btn btn-info px-4"> Edit </button>
+                                    <button type="button" @onclick="()=>DeleteCat(item.Id)" class="btn btn-danger px-4">Delete</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+
+            }
+        </ul>
+    </section>
+</div>
+
+
+@code {
+    private List<Category> categories = new List<Category>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        var result = await httpClient.GetAsync("https://expertshopapi.azurewebsites.net/api/Categories");
+        if (result.IsSuccessStatusCode)
+        {
+            categories = await result.Content.ReadFromJsonAsync<List<Category>>();
+        }
+    }
+
+    public async void AddCategory()
+    {
+        navManager.NavigateTo("/Admin/add-category");
+    }
+
+
+    public async void EditCategory(int Id)
+    {
+        navManager.NavigateTo($"/Admin/edit-category/{Id}");
+    }
+
+    public async void DeleteCat(int Id)
+    {
+        navManager.NavigateTo($"/Admin/delete-category/{Id}");
+    }
+
+    private async void Return()
+    {
+        navManager.NavigateTo("/Admin/administration");
+    }
+}
+

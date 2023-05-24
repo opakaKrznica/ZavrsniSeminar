@@ -1,0 +1,192 @@
+﻿@page "/shopping-cart"
+@using models;
+@inject ShoppingCartInMemory shoppingCartInMemory;
+@inject HttpClient httpClient;
+@inject NavigationManager navManager;
+
+
+<div class="container-md Width ">
+
+    <nav class="navbar bg-info d-md-flex justify-content-around sticky-top">
+
+        <h3 class="mt-3 fs-2 ">Shopping Cart</h3>
+
+        <div class="card-text bg-secondary  border-dark border-bottom border-end border-2 
+                     rounded-2 text-light text-center me-5 m-2 p-4">
+            <h4>Total cash: @sumDiscount Eur</h4>
+        </div>
+
+        <button type="button" class="btn-secondary rounded-2 m-3 p-2 " @onclick="Return">
+            Go Back
+        </button>
+
+    </nav>
+
+    @{
+        double sum = 0;
+    }
+
+
+    <div class="d-flex justify-content-center  bg-secondary bg-gradient">
+
+        <ul class="list-unstyled">
+
+            @foreach (var item in shoppingCartInMemory.selectedItems.OrderBy(x => x.ProductId))
+            {
+
+
+                <li>
+                    <div class="container ">
+                        <div class="card  text-center p-2 mt-3">
+                            <div class="card-body">
+                                <h3 class="card-title bg-info text-dark rounded-2 p-2">
+                                    @item.Product.ProductName
+                                </h3>
+                                <br /><br />
+                                <p class="card-text fs-4">
+                                    Description: @item.Product.ProductDescription
+                                </p>
+                                <br />
+                                <p class="card-text fs-4">
+                                    Unit Price: @item.Product.ProductPrice Eur
+                                </p>
+                                <br />
+                                <p class="card-text fs-4">
+                                    Discount: @item.Product.Discount  %
+                                </p>
+                                <br />
+
+                                <div>
+                                    @{
+                                        if (item.Product.Discount < 1)
+                                        {
+                                            var sumItem = Convert.ToDouble(item.Product.ProductPrice)
+                                            * Convert.ToDouble(item.NumberOfItems);
+                                            sum = sum + sumItem;
+                                            <p>
+                                                Product price: @sumItem
+                                            </p>
+                                        }
+                                        else
+                                        {
+                                            var discount = ((Convert.ToDouble(item.Product.Discount) / 100)
+                                            * Convert.ToDouble(item.Product.ProductPrice));
+                                            var result = Math
+                                            .Round(Convert.ToDouble(item.Product.ProductPrice) - discount, 2);
+                                            result = result * item.NumberOfItems;
+                                            sum = sum + result;
+
+                                            <div class="card-text fs-6 pb-4 ">
+                                                <h5 class=" fw-bold "> Discounted price: @result Eur</h5> (Unit price:
+                                                @item.Product.ProductPrice * @item.NumberOfItems / Discount: @item.Product.Discount%)
+                                            </div>
+                                            <div class="form-outline w-50 d-inline-flex align-items-center">
+                                                <div>
+                                                    <button type="button" class="btn btn-info btn-lg p-2 px-2" @onclick="()=>Decrement(item.ProductId)"> - </button>
+                                                </div>
+                                                <div>
+
+                                                    <input class="form-control font-monospace fs-4 text-center px-2 ps-4" type="number" @bind-value="item.NumberOfItems" disabled="disabled">
+                                                </div>
+                                                <div>
+
+                                                    <button type="button" class="btn btn-info btn-lg p-2 px-2" @onclick="()=>Increment(item.ProductId)"> + </button>
+
+                                                </div>
+
+                                            </div>
+                                        }
+                                        <div>
+
+                                            <button type="button" class="btn-danger btn-lg mt-3 p-2 " @onclick="()=>DeleteProd(item.ProductId)">
+                                                Delete
+                                            </button>
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+
+            }
+            <!--<div class="card-text bg-info text-center border-dark border-bottom border-end border-2 rounded-2 m-2 p-4" style=" width: 20rem">
+                <h4>Total cash: @sum Eur</h4>
+            </div>-->
+        </ul>
+    </div>
+
+</div>
+
+@code {
+    double sumDiscount = 0;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await TotalCash();
+    }
+    public async Task Decrement(int prodId)
+    {
+        var decrease = shoppingCartInMemory.selectedItems.FirstOrDefault(x => x.ProductId == prodId);
+
+        if (decrease.NumberOfItems > 1)
+        {
+            shoppingCartInMemory.selectedItems.Remove(decrease);
+            decrease.NumberOfItems = decrease.NumberOfItems - 1;
+            shoppingCartInMemory.selectedItems.Add(decrease);
+            await TotalCash();
+            StateHasChanged();
+        }
+    }
+
+    public async Task Increment(int prodId)
+    {
+        var decrease = shoppingCartInMemory.selectedItems.FirstOrDefault(x => x.ProductId == prodId);
+        shoppingCartInMemory.selectedItems.Remove(decrease);
+        decrease.NumberOfItems = decrease.NumberOfItems + 1;
+        shoppingCartInMemory.selectedItems.Add(decrease);
+        await TotalCash();
+        StateHasChanged();
+    }
+
+    public async Task TotalCash()
+    {
+        sumDiscount = 0;
+        foreach (var item in shoppingCartInMemory.selectedItems.OrderBy(x => x.ProductId))
+        {
+            if (item.Product.Discount < 1)
+            {
+                sumDiscount = sumDiscount + Convert.ToDouble(item.Product.ProductPrice) *
+            Convert.ToDouble(item.NumberOfItems);
+            }
+            else
+            {
+                var getPrice = Convert.ToDouble(item.Product.ProductPrice);
+
+                var discount = ((Convert.ToDouble(item.Product.Discount) / 100) *
+                Convert.ToDouble(item.Product.ProductPrice));
+
+                getPrice = Math.Round(Convert.ToDouble(item.Product.ProductPrice) - discount, 2);
+
+                sumDiscount = sumDiscount + (getPrice * item.NumberOfItems);
+            }
+
+        }
+    }
+
+    private async Task DeleteProd(int id)
+    {
+        var delete = shoppingCartInMemory.selectedItems.FirstOrDefault(x => x.ProductId == id);
+
+        shoppingCartInMemory.selectedItems.Remove(delete);
+        await TotalCash();
+        StateHasChanged();
+
+    }
+    private async void Return()
+    {
+        navManager.NavigateTo("Admin/product-list");
+    }
+
+}
+

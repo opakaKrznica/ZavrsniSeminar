@@ -1,0 +1,76 @@
+﻿@page "/Admin/files-update-category/{id:int}"
+@inject HttpClient Http
+@using System.IO
+@using Expert.WebShop.Vjezbe.models;
+@inject NavigationManager navManager;
+
+
+<div class="bg-warning text-dark font-weight-bolder p-3 d-flex justify-content-between">
+    <h2 class="pt-4 ">Update files</h2>
+    <button type="button" class="btn-secondary rounded-2 m-3 p-2 " @onclick="Return">
+        Back to category
+    </button>
+</div>
+
+<form class="m-4 " @onsubmit="OnSubmit">
+
+    <InputFile OnChange="OnInputFileChange" multiple />
+
+
+    <br /><br /><br />
+    <button class="bg-warning text-dark" type="submit">Upload Selected File(s)</button>
+</form>
+
+
+
+@code {
+    [Parameter]
+    public int Id { get; set; }
+    string Message = "No file(s) selected";
+
+    IReadOnlyList<IBrowserFile> selectedFiles;
+
+
+    private void OnInputFileChange
+    (InputFileChangeEventArgs e)
+    {
+        selectedFiles = e.GetMultipleFiles();
+        Message = $"{selectedFiles.Count} file(s) selected";
+        this.StateHasChanged();
+    }
+
+    private async void OnSubmit()
+    {
+        foreach (var file in selectedFiles)
+        {
+            Stream stream = file.OpenReadStream();
+            MemoryStream ms = new MemoryStream();
+            await stream.CopyToAsync(ms);
+            stream.Close();
+
+            UploadedFilesCategory uploadFile = new UploadedFilesCategory();
+            uploadFile.FileName = file.Name;
+            uploadFile.IdCategory = Id;
+            uploadFile.FileContent = ms.ToArray();
+            ms.Close();
+
+            var upload = await Http.PostAsJsonAsync<UploadedFilesCategory>
+    ("https://expertshopapi.azurewebsites.net/api/FileUpload", uploadFile);
+
+            if (upload.IsSuccessStatusCode)
+            {
+                var a = "test";
+            }
+        }
+        Message = $"{selectedFiles.Count} file(s) uploaded on server";
+        this.StateHasChanged();
+    }
+
+
+
+    private async void Return()
+    {
+        navManager.NavigateTo("/Admin/category-list");
+    }
+
+}
