@@ -1,0 +1,85 @@
+﻿@page "/checkout"
+@using Expert.WebShop.Vjezbe.models;
+@inject ShoppingCartInMemory shoppingCartInMemory
+@inject HttpClient httpClient
+
+
+<h3>Checkout your Products</h3>
+
+<form @onsubmit="CheckoutItems">
+
+    <div class="row mb-3">
+        <label for="Name" class="col-sm-2 col-form-label">Ime Osobe</label>
+        <div class="col-sm-10">
+            <input type="text" @bind-value="ImeOsobe" class="form-control" id="Name">
+        </div>
+    </div>
+    <div class="row mb-3">
+        <label for="Email" class="col-sm-2 col-form-label">Email</label>
+        <div class="col-sm-10">
+            <input type="text" @bind-value="Email" class="form-control" id="Email">
+        </div>
+    </div>
+  
+
+   @* <div class="row mb-3">
+        <label for="TotalAmmount" class="col-sm-2 col-form-label">TotalAmmount</label>
+        <div class="col-sm-10">
+            <input type="text" @bind-value="" class="form-control" id="TotalAmmount">
+        </div>
+    </div>*@
+
+    <button type="submit" class="btn btn-primary">Kupi</button>
+
+</form>
+@code {
+    public string Email;
+    public string ImeOsobe;
+    //public float TotalAmount ;
+    
+
+
+    public async Task CheckoutItems()
+    {
+        Guid orderId = Guid.NewGuid();
+        foreach (var item in shoppingCartInMemory.selectedItems)
+        {
+            BuyItems cartItem = new BuyItems();
+
+            cartItem.NumberOfItems = item.NumberOfItems;
+            cartItem.OrderId = orderId;
+            cartItem.ProductId = item.ProductId;
+            cartItem.OrderedByName = ImeOsobe;
+            cartItem.PricePerProduct = (float)item.Product.ProductPrice;
+            cartItem.OrderedByEmail = Email;
+            cartItem.ProductDiscount = item.Product.Discount;
+
+
+            if (cartItem.ProductDiscount > 0)
+            {
+                var discount = ((Convert.ToDouble(item.Product.Discount) / 100)
+                        * Convert.ToDouble(item.Product.ProductPrice));
+                var result = Math
+                .Round(Convert.ToDouble(item.Product.ProductPrice) - discount, 2);
+                result = result * item.NumberOfItems;
+                cartItem.TotalAmmount = (float)result;
+            }
+            else
+            {
+                cartItem.TotalAmmount = (float)item.Product.ProductPrice * (float)item.NumberOfItems;
+            }
+
+            cartItem.IsDelivered = false;
+            cartItem.IsPayed = false;
+
+            var add = await httpClient.PostAsJsonAsync($"{Constants.BaseUrl}/ShoppingCards", cartItem);
+
+            if (add.IsSuccessStatusCode)
+            {
+                var jelproslo = "jej!";
+            }
+        }
+
+    }
+
+}

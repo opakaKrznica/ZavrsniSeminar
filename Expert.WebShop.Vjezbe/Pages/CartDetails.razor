@@ -12,9 +12,13 @@
         <h3 class="mt-3 fs-2 ">Shopping Cart</h3>
 
         <div class="card-text bg-secondary  border-dark border-bottom border-end border-2 
-                     rounded-2 text-light text-center me-5 m-2 p-4">
-            <h4>Total cash: @sumDiscount Eur</h4>
+                     rounded-2 text-light text-center me-2 m-2 p-4">
+            <h4>Total cash: @SumDiscount Eur</h4>
         </div>
+
+        <button type="button" class="btn-secondary rounded-2 m-3 p-2 px-3" @onclick="Checkout">
+            B U Y
+            </button>
 
         <button type="button" class="btn-secondary rounded-2 m-3 p-2 " @onclick="Return">
             Go Back
@@ -27,9 +31,9 @@
     }
 
 
-    <div class="d-flex justify-content-center  bg-secondary bg-gradient">
+    <section class="d-flex justify-content-center text-center bg-secondary bg-gradient">
 
-        <ul class="list-unstyled">
+        <ul class ="list-unstyled mt-3 p-5">
 
             @foreach (var item in shoppingCartInMemory.selectedItems.OrderBy(x => x.ProductId))
             {
@@ -37,6 +41,7 @@
 
                 <li>
                     <div class="container ">
+
                         <div class="card  text-center p-2 mt-3">
                             <div class="card-body">
                                 <h3 class="card-title bg-info text-dark rounded-2 p-2">
@@ -63,8 +68,8 @@
                                             var sumItem = Convert.ToDouble(item.Product.ProductPrice)
                                             * Convert.ToDouble(item.NumberOfItems);
                                             sum = sum + sumItem;
-                                            <p>
-                                                Product price: @sumItem
+                                            <p class="card-text fs-4 fw-bold">
+                                                Product price: @sumItem  Eur
                                             </p>
                                         }
                                         else
@@ -76,8 +81,8 @@
                                             result = result * item.NumberOfItems;
                                             sum = sum + result;
 
-                                            <div class="card-text fs-6 pb-4 ">
-                                                <h5 class=" fw-bold "> Discounted price: @result Eur</h5> (Unit price:
+                                            <div class="card-text fs-5 pb-4 ">
+                                                <h4 class=" fw-bold"> Discounted price: @result Eur</h4> (Unit price:
                                                 @item.Product.ProductPrice * @item.NumberOfItems / Discount: @item.Product.Discount%)
                                             </div>
                                             <div class="form-outline w-50 d-inline-flex align-items-center">
@@ -114,17 +119,21 @@
                 <h4>Total cash: @sum Eur</h4>
             </div>-->
         </ul>
-    </div>
-
+    </section>
+   
 </div>
 
+
+
 @code {
-    double sumDiscount = 0;
+    double SumDiscount = 0;
 
     protected override async Task OnInitializedAsync()
     {
         await TotalCash();
     }
+
+
     public async Task Decrement(int prodId)
     {
         var decrease = shoppingCartInMemory.selectedItems.FirstOrDefault(x => x.ProductId == prodId);
@@ -151,12 +160,12 @@
 
     public async Task TotalCash()
     {
-        sumDiscount = 0;
+        SumDiscount = 0;
         foreach (var item in shoppingCartInMemory.selectedItems.OrderBy(x => x.ProductId))
         {
             if (item.Product.Discount < 1)
             {
-                sumDiscount = sumDiscount + Convert.ToDouble(item.Product.ProductPrice) *
+                SumDiscount = SumDiscount + Convert.ToDouble(item.Product.ProductPrice) *
             Convert.ToDouble(item.NumberOfItems);
             }
             else
@@ -168,8 +177,9 @@
 
                 getPrice = Math.Round(Convert.ToDouble(item.Product.ProductPrice) - discount, 2);
 
-                sumDiscount = sumDiscount + (getPrice * item.NumberOfItems);
+                SumDiscount = SumDiscount + (getPrice * item.NumberOfItems);
             }
+            //shoppingCartInMemory.selectedItems.Add(SumDiscount);
 
         }
     }
@@ -185,7 +195,12 @@
     }
     private async void Return()
     {
-        navManager.NavigateTo("Admin/product-list");
+        navManager.NavigateTo("/");
+    }
+
+    public async Task Checkout()
+    {
+        navManager.NavigateTo("/checkout");
     }
 
 }

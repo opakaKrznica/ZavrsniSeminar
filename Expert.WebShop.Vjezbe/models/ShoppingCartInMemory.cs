@@ -37,8 +37,10 @@ namespace Expert.WebShop.Vjezbe.models
                     
                 addToList.ProductId = addProduct.Id;//Id koji si procitao,postavi kao novi ProductId
                 addToList.NumberOfItems = 1; //dodaj uvjek jedan item kad kliknes
+                 addToList.SumDiscount = 0;
                 selectedItems.Add(addToList);//dodajemo u selectedItems u tu listu
-                navManager.NavigateTo("/Admin/product-list");
+
+                navManager.NavigateTo("/");
 
             }
             }
