@@ -15,46 +15,40 @@
     <nav class="flex-column">
         <div class="nav-item px-3">
             <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
-                <span class="oi oi-random" aria-hidden="true"></span> Administration
-            </NavLink>
-        </div>
-        <!--<div class="nav-item px-3">
-            <NavLink class="nav-link" href="counter">
-                <span class="oi oi-plus" aria-hidden="true"></span> Counter
+                <span class="oi oi-home" aria-hidden="true"></span> Home
             </NavLink>
         </div>
         <div class="nav-item px-3">
-            <NavLink class="nav-link" href="fetchdata">
-                <span class="oi oi-list-rich" aria-hidden="true"></span> Fetch data
+            <NavLink class="nav-link" href="javascript">
+                <span class="oi oi-plus" aria-hidden="true"></span> java script
             </NavLink>
-        </div>-->
+        </div>
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="/Admin/administration">
+                <span class="oi oi-list-random" aria-hidden="true"></span> Administration
+            </NavLink>
+        </div>
         <div class="nav-item px-3">
             <NavLink class="nav-link" href="shopping-cart">
                 <span class="oi oi-cart" aria-hidden="true"></span> Shopping Cart
             </NavLink>
         </div>
-        <!--<div class="nav-item px-3">
-            <NavLink class="nav-link" href="/Admin/dashboard">
-                <span class="oi oi-random" aria-hidden="true"></span> Dashboard
-            </NavLink>
-                </div>-->
 
-        <!--odavdje ide programibilni dio--!>
 
         @foreach (var item in categories)
         {
 
             var link = $"/category/{item.Id}/{item.CategoryName}";
 
-                                  <div class="nav-item px-3">
-                                    <NavLink class="nav-link" href="@link">
-                                         <span class="oi oi-fire" aria-hidden="true"></span>@item.CategoryName
-                                    </NavLink>
-                                </div>
+            <div class="nav-item px-3">
+                <NavLink class="nav-link" href="@link">
+                    <span class="oi oi-fire" aria-hidden="true"></span>@item.CategoryName
+                </NavLink>
+            </div>
         }
 
-            </nav>
-        </div>
+    </nav>
+</div>
 
 
 
@@ -78,4 +72,4 @@
     {
         collapseNavMenu = !collapseNavMenu;
     }
-        }
+}

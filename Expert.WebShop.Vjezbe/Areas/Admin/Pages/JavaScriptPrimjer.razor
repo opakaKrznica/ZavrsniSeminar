@@ -1,0 +1,30 @@
+﻿@page "/javascript"
+@inject IJSRuntime ijsRun
+
+<h3>JavaScript File</h3>
+@test
+
+
+@code {
+    private IJSObjectReference? JSModule;
+    public string test;
+
+    protected override async void OnAfterRender(bool firstRender)
+    {
+        if (firstRender)
+        {
+            JSModule = await ijsRun.InvokeAsync<IJSObjectReference>
+    ("import", "/Pages/JavaScriptPrimjer.razor.js");    
+            var nasaFunkcija = await JSModule.InvokeAsync<string>("naskupus", "Take same input");
+            test = nasaFunkcija;
+
+        }
+        else
+        {
+
+        }
+        
+    }
+
+
+}

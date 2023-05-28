@@ -1,0 +1,95 @@
+﻿@page "/home/{id:int}/{categoryName}"
+
+@using Expert.WebShop.Vjezbe.models;
+@inject HttpClient httpClient;
+@inject NavigationManager navManager;
+
+<div class="container-md Width">
+
+    <nav class="navbar bg-info  p-2 d-flex justify-content-around sticky-top">
+
+        <h2 class="pt-2 text-center pe-md-5 fs-2 ">Category List</h2>
+
+
+    </nav>
+
+    <section class="d-flex justify-content-center bg-secondary bg-gradient ">
+        <ul class="list-unstyled  p-5 text-center">
+            @foreach (Category item in categories)
+            {
+                <li class="pt-3">
+                    <div class="container">
+
+                        <div class="card p-sm-3">
+
+                            <img class="card-img-top img-thumbnail mx-auto d-block w-75" src=@item.ImagePath alt="neka slika..">
+
+                            <div class="card-body ">
+
+                                <p class="card-title h5">
+                                    ID: @item.Id
+                                </p>
+
+                              
+                                <button type="button" @onclick="()=>GoTo(item.Id)" class="shadow-lg p-3 btn btn-outline-light my-5 bg-white rounded text-black fs-1 " style="width: 18rem">  @item.CategoryName </button>
+                                <p class="card-text h5 mb-4">
+                                    @item.CategoryDescription
+                                </p>
+                               
+                            </div>
+                        </div>
+                    </div>
+                </li>
+
+            }
+           
+        </ul>
+       
+    </section>
+    <Footer></Footer>
+</div>
+
+
+@code {
+    [Parameter]
+    public int Id { get; set; }
+    [Parameter]
+    public string CategoryName { get; set; }
+
+    private List<Category> categories = new List<Category>();
+    private Category category = new Category();
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        var result = await httpClient.GetAsync("https://expertshopapi.azurewebsites.net/api/Categories");
+        if (result.IsSuccessStatusCode)
+        {
+            categories = await result.Content.ReadFromJsonAsync<List<Category>>();
+
+          
+        }
+    }
+
+
+    public async Task<Category> GetCategory(int id)
+    {
+        var result = await httpClient.GetAsync($"https://expertshopapi.azurewebsites.net/api/Categories/{id}");
+
+        if (result.IsSuccessStatusCode)
+        {
+            category = await result.Content.ReadFromJsonAsync<Category>();
+        }
+        return category;
+    }
+
+    public async void GoTo(int id)
+    {
+        category = await GetCategory(id);
+        navManager.NavigateTo($"/category/{category.Id}/{category.CategoryName}");
+
+    }
+}
+
+
+  

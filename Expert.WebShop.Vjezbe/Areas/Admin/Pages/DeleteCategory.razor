@@ -2,7 +2,7 @@
 @using Expert.WebShop.Vjezbe.models;
 @inject HttpClient httpClient;
 @inject NavigationManager navManager;
-
+@inject IJSRuntime ijsRun
 
 
 <div class="container-fluid px-0 w-75 bg-secondary bg-gradient">
@@ -52,7 +52,19 @@
 
     private async Task Delete(int Id)
     {
-        var result = await httpClient.DeleteAsync($"https://expertshopapi.azurewebsites.net/api/Categories/{Id}");
+
+       // await ijsRun.InvokeVoidAsync("alert", "Pazite! Pokusavate izbrisati kategoriju!");
+
+        var result = new HttpResponseMessage();
+
+        var confirm = await ijsRun.InvokeAsync<bool>("confirm", "Jeste li sigurni da zelite brisati? ");
+
+        if(confirm == true)
+        {
+             result = await httpClient.DeleteAsync($"https://expertshopapi.azurewebsites.net/api/Categories/{Id}");
+
+        }
+
 
         if (result.IsSuccessStatusCode)
         {
