@@ -4,7 +4,7 @@
 
 .top-row {
     height: 3.5rem;
-    background-color: rgba(0,0,0,0.4);
+    /*background-color: rgba(0,0,0,0.4);*/     /*  --maknuo boju na vrhu sidebara*/
 }
 
 .navbar-brand {
@@ -32,7 +32,7 @@
     }
 
     .nav-item ::deep a {
-        color: #d7d7d7;
+        color: white;     /* ovdje mjenjao boju slova na homu*/
         border-radius: 4px;
         height: 3rem;
         display: flex;

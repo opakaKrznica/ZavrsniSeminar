@@ -5,5 +5,14 @@
 }
 
 .indigo {
-    color: #102060
+    background-color: #0D2262;
+    color: floralwhite;
+}
+
+footer {
+    background-color: #3A0647;
+}
+
+.bi bi-arrow-up-circle{
+    background-color:white:
 }
