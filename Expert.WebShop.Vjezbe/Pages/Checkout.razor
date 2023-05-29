@@ -21,13 +21,13 @@
         </div>
     </div>
   
-
+@*
     <div class="row mb-3">
         <label for="TotalAmmount" class="col-sm-2 col-form-label">TotalAmmount</label>
         <div class="col-sm-10">
-            <input type="text" @bind-value="cartItem.TotalAmmount" class="form-control" id="TotalAmmount">
+            <input type="text" @bind-value="" class="form-control" id="TotalAmmount">
         </div>
-    </div>
+    </div>*@
 
     <button type="submit" class="btn btn-primary">Kupi</button>
 
@@ -35,16 +35,16 @@
 @code {
     public string Email;
     public string ImeOsobe;
-    public float TotalAmount ;
+    
 
-    BuyItems cartItem = new BuyItems();
+    
 
     public async Task CheckoutItems()
     {
         Guid orderId = Guid.NewGuid();
         foreach (var item in shoppingCartInMemory.selectedItems)
         {
-           
+            BuyItems cartItem = new BuyItems();
 
             cartItem.NumberOfItems = item.NumberOfItems;
             cartItem.OrderId = orderId;

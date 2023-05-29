@@ -74,7 +74,7 @@
 
     private async Task CategoryAdd()
     {
-        var result = await httpClient.PostAsJsonAsync("https://expertshopapi.azurewebsites.net/api/Categories" , category);
+        var result = await httpClient.PostAsJsonAsync($"{Constants.BaseUrl}/Categories", category);
 
         if (result.IsSuccessStatusCode)
         {

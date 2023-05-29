@@ -96,7 +96,7 @@
             ms.Close();
 
             var upload = await Http.PostAsJsonAsync<UploadedFiles>
-    ("https://expertshopapi.azurewebsites.net/api/FileUpload", uploadFile);
+    ($"{Constants.BaseUrl}/FileUpload", uploadFile);
 
             if (upload.IsSuccessStatusCode)
             {
@@ -110,7 +110,7 @@
 
     protected override async Task OnInitializedAsync()
     {
-        var result = await Http.GetAsync($"https://expertshopapi.azurewebsites.net/api/Products/{Id}");
+        var result = await Http.GetAsync($"{Constants.BaseUrl}/Products/{Id}");
 
         if (result.IsSuccessStatusCode)
         {
@@ -125,7 +125,7 @@
 
     public async Task<List<ImageFilePath>> GetImages(int Id)
     {
-        var apiResult = await Http.GetAsync($"https://expertshopapi.azurewebsites.net/api/FileUpload/GetProductPhotos/{Id}");
+        var apiResult = await Http.GetAsync($"{Constants.BaseUrl}/FileUpload/GetProductPhotos/{Id}");
         var images = new List<ImageFilePath>();
         if (apiResult.IsSuccessStatusCode)
         {

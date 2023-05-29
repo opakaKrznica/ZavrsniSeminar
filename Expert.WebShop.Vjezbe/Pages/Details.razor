@@ -53,7 +53,7 @@
 
     protected override async Task OnInitializedAsync()
     {
-        var result = await httpClient.GetAsync($"https://expertshopapi.azurewebsites.net/api/Products/{Id}");
+        var result = await httpClient.GetAsync($"{Constants.BaseUrl}/Products/{Id}");
         if (result.IsSuccessStatusCode)
         {
             productDetails = await result.Content.ReadFromJsonAsync<Products>();
@@ -64,7 +64,7 @@
 
     public async Task<Category> GetCategory(int categoryId)
     {
-        var result = await httpClient.GetAsync($"https://expertshopapi.azurewebsites.net/api/Categories/{productDetails.CategoryId}");
+        var result = await httpClient.GetAsync($"{Constants.BaseUrl}/Categories/{productDetails.CategoryId}");
         if (result.IsSuccessStatusCode)
         {
             category = await result.Content.ReadFromJsonAsync<Category>();

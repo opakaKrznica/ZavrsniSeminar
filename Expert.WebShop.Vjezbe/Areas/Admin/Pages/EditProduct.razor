@@ -68,7 +68,7 @@
 
     protected override async Task OnInitializedAsync()
     {
-        var result = await httpClient.GetAsync($"https://expertshopapi.azurewebsites.net/api/Products/{Id}");
+        var result = await httpClient.GetAsync($"{Constants.BaseUrl}/Products/{Id}");
         if (result.IsSuccessStatusCode)
         {
             products = await result.Content.ReadFromJsonAsync<Products>();
@@ -77,7 +77,7 @@
 
     private async Task ProductEdit()
     {
-        var result = await httpClient.PutAsJsonAsync($"https://expertshopapi.azurewebsites.net/api/Products/{Id}", products);
+        var result = await httpClient.PutAsJsonAsync($"{Constants.BaseUrl}/Products/{Id}", products);
         if (result.IsSuccessStatusCode)
         {
             navManager.NavigateTo("/Admin/product-list");

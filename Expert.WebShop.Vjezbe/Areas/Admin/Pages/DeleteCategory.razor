@@ -43,7 +43,7 @@
 
     protected override async Task OnInitializedAsync()
     {
-        var result = await httpClient.GetAsync($"https://expertshopapi.azurewebsites.net/api/Categories/{Id}");
+        var result = await httpClient.GetAsync($"{Constants.BaseUrl}/Categories/{Id}");
         if (result.IsSuccessStatusCode)
         {
             category = await result.Content.ReadFromJsonAsync<Category>();
@@ -61,7 +61,7 @@
 
         if(confirm == true)
         {
-             result = await httpClient.DeleteAsync($"https://expertshopapi.azurewebsites.net/api/Categories/{Id}");
+            result = await httpClient.DeleteAsync($"{Constants.BaseUrl}/Categories/{Id}");
 
         }
 

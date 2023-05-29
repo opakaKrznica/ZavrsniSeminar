@@ -112,7 +112,7 @@
 
     public async Task<Category> GetCategory(int categoryId)
     {
-        var result = await httpClient.GetAsync($"https://expertshopapi.azurewebsites.net/api/Categories/{Id}");
+        var result = await httpClient.GetAsync($"{Constants.BaseUrl}/Categories/{Id}");
         if (result.IsSuccessStatusCode)
         {
             category = await result.Content.ReadFromJsonAsync<Category>();
@@ -122,7 +122,7 @@
 
     public async Task<List<Products>> GetProducts(int categoryId)
     {
-        var proizvodiresult = await httpClient.GetAsync($"https://expertshopapi.azurewebsites.net/api/Products/category-products/{Id}");
+        var proizvodiresult = await httpClient.GetAsync($"{Constants.BaseUrl}/Products/category-products/{Id}");
         if (proizvodiresult.IsSuccessStatusCode)
         {
             products = await proizvodiresult.Content.ReadFromJsonAsync<List<Products>>();
@@ -133,7 +133,7 @@
 
     public async Task<List<ImageFilePath>> GetImages(int Id)
     {
-        var apiResult = await httpClient.GetAsync($"https://expertshopapi.azurewebsites.net/api/FileUpload/GetProductPhotos/{Id}");
+        var apiResult = await httpClient.GetAsync($"{Constants.BaseUrl}/FileUpload/GetProductPhotos/{Id}");
         var images = new List<ImageFilePath>();
         if (apiResult.IsSuccessStatusCode)
         {
