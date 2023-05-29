@@ -9,7 +9,7 @@ namespace Expert.WebShop.Vjezbe.models
 
         public int NumberOfItems { get; set; }
 
-        public float SumDiscount { get; set; }
+        public double SumDiscount { get; set; }
 
 
 
