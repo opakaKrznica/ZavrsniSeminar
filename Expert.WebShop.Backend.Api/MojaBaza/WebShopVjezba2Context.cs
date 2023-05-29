@@ -21,10 +21,6 @@ public partial class WebShopVjezba2Context : DbContext
 
     public virtual DbSet<ShoppingCard> ShoppingCards { get; set; }
 
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-        => optionsBuilder.UseSqlServer("Data Source=DESKTOP-JE9G202;Initial Catalog=WebShopVjezba2;Integrated Security=True;Connect Timeout=30;Encrypt=False;Trust Server Certificate=False;Application Intent=ReadWrite;Multi Subnet Failover=False");
-
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Category>(entity =>
@@ -48,12 +44,8 @@ public partial class WebShopVjezba2Context : DbContext
 
             entity.HasOne(d => d.Product).WithMany(p => p.ShoppingCards)
                 .HasForeignKey(d => d.ProductId)
-                .OnDelete(DeleteBehavior.NoAction)
+                .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_ShoppingCard_Product");
         });
-
-        //OnModelCreatingPartial(modelBuilder);
     }
-
-    //partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
 }
