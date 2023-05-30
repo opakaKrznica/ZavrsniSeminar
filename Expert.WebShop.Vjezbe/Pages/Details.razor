@@ -39,12 +39,10 @@
             
                 @{
                     if (productDetails.Discount < 1)
-                    {
-                                              
+                    {                                              
                         <p class="card-text fs-4 fw-bold">
                             Discount Price : @productDetails.ProductPrice Eur
-                        </p>
-                       
+                        </p>                       
                     }
                     else
                     {
@@ -59,7 +57,7 @@
                         <br />
                     }
                    
-                    }
+                }
                
             <button class="btn btn-success p-3 fs-5" @onclick="()=>shoppingCart.AddToShoppingCart(productDetails.Id, navManager)">Add to Cart</button>
 
