@@ -2,6 +2,7 @@
 @using Expert.WebShop.Vjezbe.models;
 @inject HttpClient httpClient;
 @inject NavigationManager navManager;
+@inject IJSRuntime ijsRun;
 
 
 
@@ -18,9 +19,10 @@
 
     @if (IsError)
     {
-        <div class="text-dark text-center p-3 h4">
-            Upps! dogodila se greška. Pokušajete ponovo.
+        <div class="text-dark bg-info text-center p-3 h4">
+            Upps! There was a mistake. Please, try again !!!'.
         </div>
+
 
     }
 
@@ -74,7 +76,11 @@
 
     private async Task CategoryAdd()
     {
-        var result = await httpClient.PostAsJsonAsync($"{Constants.BaseUrl}/Categories", category);
+        await ijsRun.InvokeVoidAsync("alert", "You successfully Added Category!!!");
+
+        //var result = new HttpResponseMessage();
+
+         var result = await httpClient.PostAsJsonAsync($"{Constants.BaseUrl}/Categories", category);
 
         if (result.IsSuccessStatusCode)
         {

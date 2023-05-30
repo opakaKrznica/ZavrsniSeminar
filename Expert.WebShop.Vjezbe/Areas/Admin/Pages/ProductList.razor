@@ -51,20 +51,22 @@
                             <h5 class="card-title h2">
                                 @item.ProductName
                             </h5>
-                            <p class="card-text">
+                            <p class="card-text fs-4 ">
                                 @item.ProductDescription
                             </p>
 
-                            <p class="card-text">
-                                Price: @item.ProductPrice
+                            <p class="card-text lead">
+                                Price: @item.ProductPrice Eur
                             </p>
 
-                            <p class="card-text">
-                                Discount:@item.Discount
+                            <p class="card-text pb-2">
+                                Discount:@item.Discount %
                             </p>
+                            
+                               
                             <div class="d-flex justify-content-between">
                                 <button type="button" @onclick="()=>EditProd(item.Id)" class="btn indigo px-md-5 "> EDIT </button>
-                                <button type="button" @onclick="()=>DeleteProd(item.Id)" class="btn btn-danger px-md-4 ms-md-4 ">DELETE</button>
+                                <button type="button" @onclick="()=>DeleteProd(item.Id)" class="btn btn-danger px-md-4  ">DELETE</button>
                                 <button type="button" @onclick="()=>UpdateFiles(item.Id)" class="btn btn-warning">UPDATE Img.</button>
                             </div>
                         </div>

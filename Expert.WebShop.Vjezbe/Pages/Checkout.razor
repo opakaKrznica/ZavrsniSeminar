@@ -2,6 +2,7 @@
 @using Expert.WebShop.Vjezbe.models;
 @inject ShoppingCartInMemory shoppingCartInMemory
 @inject HttpClient httpClient
+@inject NavigationManager navManager
 
 
 <h3>Checkout your Products</h3>
@@ -78,7 +79,7 @@
 
             if (add.IsSuccessStatusCode)
             {
-                var jelproslo = "jej!";
+                navManager.NavigateTo("/");
             }
         }
 
