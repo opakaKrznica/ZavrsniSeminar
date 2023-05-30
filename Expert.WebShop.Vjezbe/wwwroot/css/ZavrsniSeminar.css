@@ -1,6 +1,11 @@
 ﻿@media (min-width: 768px) {
 
-    .Width {  width: 75%;  }
+    .Width { 
+        width: 75%;  }
+
+    .indigo {
+        background-color: #3A0647;
+    }
 
 }
 

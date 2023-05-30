@@ -4,8 +4,8 @@
     {
 #if DEBUG
 
-        // static readonly string BaseUrl = "https://localhost:7005/api";
-        public static readonly string BaseUrl = "https://expertshopapi.azurewebsites.net/api";
+         //static readonly string BaseUrl = "https://localhost:7247/api";
+       public static readonly string BaseUrl = "https://expertshopapi.azurewebsites.net/api";
 
 #else
         public static readonly string BaseUrl = "https://expertshopapi.azurewebsites.net/api";

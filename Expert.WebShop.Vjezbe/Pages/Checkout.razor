@@ -5,14 +5,20 @@
 @inject NavigationManager navManager
 
 
-<h3>Checkout your Products</h3>
+<h3>Fill your personal details</h3>
 
 <form @onsubmit="CheckoutItems">
 
     <div class="row mb-3">
-        <label for="Name" class="col-sm-2 col-form-label">Ime Osobe</label>
+        <label for="Name" class="col-sm-2 col-form-label">Full Name</label>
         <div class="col-sm-10">
             <input type="text" @bind-value="ImeOsobe" class="form-control" id="Name">
+        </div>
+    </div>
+    <div class="row mb-3">
+        <label for="Adress" class="col-sm-2 col-form-label">Adress</label>
+        <div class="col-sm-10">
+            <input type="text" @bind-value="Adress" class="form-control" id="Adress">
         </div>
     </div>
     <div class="row mb-3">
@@ -31,6 +37,8 @@
     public string Email;
     public string ImeOsobe;
     public decimal TotalAmount;
+    public string  Adress;
+
 
     
 
@@ -45,6 +53,7 @@
             cartItem.OrderId = orderId;
             cartItem.ProductId = item.ProductId;
             cartItem.OrderedByName = ImeOsobe;
+            cartItem.OrderByAdress = Adress;
             cartItem.PricePerProduct = item.Product.ProductPrice;
             cartItem.OrderedByEmail = Email;
             cartItem.ProductDiscount = item.Product.Discount;
