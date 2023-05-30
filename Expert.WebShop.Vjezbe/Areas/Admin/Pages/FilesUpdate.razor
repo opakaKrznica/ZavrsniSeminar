@@ -95,8 +95,7 @@
             uploadFile.FileContent = ms.ToArray();
             ms.Close();
 
-            var upload = await Http.PostAsJsonAsync<UploadedFiles>
-    ($"{Constants.BaseUrl}/FileUpload", uploadFile);
+            var upload = await Http.PostAsJsonAsync<UploadedFiles> ($"{Constants.BaseUrl}/FileUpload", uploadFile);
 
             if (upload.IsSuccessStatusCode)
             {
@@ -126,7 +125,9 @@
     public async Task<List<ImageFilePath>> GetImages(int Id)
     {
         var apiResult = await Http.GetAsync($"{Constants.BaseUrl}/FileUpload/GetProductPhotos/{Id}");
+
         var images = new List<ImageFilePath>();
+
         if (apiResult.IsSuccessStatusCode)
         {
             images = await apiResult.Content.ReadFromJsonAsync<List<ImageFilePath>>();

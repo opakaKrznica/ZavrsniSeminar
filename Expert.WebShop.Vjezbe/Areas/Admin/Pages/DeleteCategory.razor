@@ -57,7 +57,7 @@
 
         var result = new HttpResponseMessage();
 
-        var confirm = await ijsRun.InvokeAsync<bool>("confirm", "Jeste li sigurni da zelite brisati? ");
+        var confirm = await ijsRun.InvokeAsync<bool>("confirm", " DELETE? Are you sure? ");
 
         if(confirm == true)
         {

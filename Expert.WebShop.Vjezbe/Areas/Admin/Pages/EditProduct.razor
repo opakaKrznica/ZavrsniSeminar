@@ -3,7 +3,7 @@
 @using Expert.WebShop.Vjezbe.models;
 @inject HttpClient httpClient;
 @inject NavigationManager navManager;
-
+@inject IJSRuntime ijsRun;
 
 <div class="container-md Width ">
 
@@ -77,7 +77,15 @@
 
     private async Task ProductEdit()
     {
-        var result = await httpClient.PutAsJsonAsync($"{Constants.BaseUrl}/Products/{Id}", products);
+        var result = new HttpResponseMessage();
+
+        var confirm = await ijsRun.InvokeAsync<bool>("confirm", "You sure for changes?"); /*invokanje JS u C# , odlazi u IF*/
+
+        if (confirm == true)
+        {
+             result = await httpClient.PutAsJsonAsync($"{Constants.BaseUrl}/Products/{Id}", products);
+        }
+
         if (result.IsSuccessStatusCode)
         {
             navManager.NavigateTo("/Admin/product-list");

@@ -7,6 +7,7 @@ using Microsoft.Extensions.FileProviders;
 var builder = WebApplication.CreateBuilder(args);
 var dbConnectionString = builder.Configuration.
     GetValue<string>("ConnectionString");
+
 // Add services to the container.
 builder.Services.AddDbContext<WebShopVjezba2Context>
     (options => options.

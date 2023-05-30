@@ -4,18 +4,16 @@
 @inject HttpClient httpClient;
 @inject NavigationManager navManager;
 
+
+<div class="row sticky-top indigo">
+
+    <h2 class=" pt-2 text-center p-2 fs-2 ">Category List</h2>
+
+    </div>
+
 <div class="container-md Width">
 
-    <nav class="row fixed-top indigo">
-
-        <h4 class="col-2 pt-3 text-center  ps-md-5 ">Expert Škola</h4>
-
-        <h2 class="col-10 pt-2 text-center p-2 fs-2 ">Category List</h2>
-
-
-    </nav>
-
-    <section class="d-flex justify-content-center bg-secondary bg-gradient ">
+       <section class="d-flex justify-content-center bg-secondary bg-gradient ">
         <ul class="list-unstyled  p-5 text-center">
             @foreach (Category item in categories)
             {

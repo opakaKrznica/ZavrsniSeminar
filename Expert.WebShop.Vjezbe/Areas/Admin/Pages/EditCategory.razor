@@ -2,6 +2,7 @@
 @using Expert.WebShop.Vjezbe.models;
 @inject HttpClient httpClient;
 @inject NavigationManager navManager;
+@inject IJSRuntime ijsRun;
 
 
 <div class="container-md Width ">
@@ -68,6 +69,7 @@
     protected override async Task OnInitializedAsync()
     {
         var result = await httpClient.GetAsync($"{Constants.BaseUrl}/Categories/{Id}");
+
         if (result.IsSuccessStatusCode)
         {
             category = await result.Content.ReadFromJsonAsync<Category>();
@@ -78,17 +80,21 @@
 
     private async Task CategoryEdit()
     {
-        var result = await httpClient.PutAsJsonAsync($"{Constants.BaseUrl}/Categories/{Id}", category);
+        var result = new HttpResponseMessage();
+
+        var confirm = await ijsRun.InvokeAsync<bool>("confirm", "You sure for changes?"); /*invokanje JS u C# , odlazi u IF*/
+
+        if(confirm == true){
+
+            result = await httpClient.PutAsJsonAsync($"{Constants.BaseUrl}/Categories/{Id}", category);
+        }
+       
 
         if (result.IsSuccessStatusCode)
         {
             navManager.NavigateTo("Admin/category-list");
         }
-        else
-        {
-            IsError = true;
-            StateHasChanged();
-        }
+      
     }
 
            private async void Return()

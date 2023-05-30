@@ -1,7 +1,7 @@
 ﻿@media (min-width: 768px) {
-    .Width {
-        width: 75%;
-    }
+
+    .Width {  width: 75%;  }
+
 }
 
 
@@ -10,7 +10,7 @@
     color: floralwhite;
 }
 
-footer {
+.footInd {
     background-color: #3A0647;
 }
 
@@ -18,3 +18,9 @@ footer {
     color: white;
     background-color:white;
 }
+
+.border {
+    color: #062565;
+    background-color:floralwhite;
+}
+

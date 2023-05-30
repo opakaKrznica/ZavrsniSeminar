@@ -6,36 +6,60 @@
 
 
 
-<div class="container-fluid px-0 w-75 bg-secondary bg-gradient">
+<div class="container-md mb-5 Width">
 
-    <section class="bg-success d-flex justify-content-between">
+    <nav class="navbar indigo d-flex justify-content-between">
        <h2 class=" text-light  p-3">Details</h2>
 
         <button type="button" class="btn-secondary  rounded-2 m-3 p-2 " @onclick="()=>Return()">
         Go Back
        </button>
 
-    </section>
+    </nav>
 
-    <section class=" pb-4 d-flex justify-content-center p-4">
+    <section class=" bg-secondary bg-gradient pb-4 d-flex justify-content-center p-4">
     <div class="card  text-center text-dark  my-3" style="width: 32rem">
         <div class="card-body">
-                <h3 class="card-title bg-success text-light border-dark border-bottom border-end border-2 rounded-2 p-2">
+                <h3 class="card-title indigo text-light border-dark border-bottom border-end border-2 rounded-2 p-2">
                  @productDetails.ProductName
             </h3>
             <br /><br />
-            <p class="card-text fs-4">
+            <p class="card-text fs-5">
                 Description : @productDetails.ProductDescription
             </p>
             <br />
             <p class="card-text fs-4">
                 Unit Price : @productDetails.ProductPrice Eur
             </p>
-            <br />
+            
             <p class="card-text fs-4">
                 Discount : @productDetails.Discount  %
             </p>
             <br />
+                @{
+                    if (productDetails.Discount < 1)
+                    {
+                                              
+                        <p class="card-text fs-4">
+                            Discount Price : productDetails.ProductPrice Eur
+                        </p>
+                        <br />
+                    }
+                    else
+                    {
+                        var discount = ((Convert.ToDouble(productDetails.Discount) / 100)
+                        * Convert.ToDouble(productDetails.ProductPrice));
+                        var result = Math
+                        .Round(Convert.ToDouble(productDetails.ProductPrice) - discount, 2);
+
+                        <p class="card-text fs-4 fw-bold">
+                            Discount Price  : @result Eur
+                        </p>
+                        <br />
+                    }
+                   
+                    }
+                <br />
             <button class="btn btn-success p-3 fs-5" @onclick="()=>shoppingCart.AddToShoppingCart(productDetails.Id, navManager)">Add to Cart</button>
 
         </div>
