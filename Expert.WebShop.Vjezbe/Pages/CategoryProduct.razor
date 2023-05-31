@@ -82,7 +82,7 @@
 
     private Category category = new Category();
     private List<Products> products = new List<Products>();
-    private List<Products> productss = new List<Products>();
+   
     private List<ImageFilePath> productImages = new List<ImageFilePath>();
 
 
@@ -92,9 +92,9 @@
 
         if (result.IsSuccessStatusCode)
         {
-            productss = await result.Content.ReadFromJsonAsync<List<Products>>();
+            products = await result.Content.ReadFromJsonAsync<List<Products>>();
 
-            foreach (var item in productss)
+            foreach (var item in products)
             {
                 var getImg = await GetImages(item.Id);
                 productImages.AddRange(getImg);
@@ -118,6 +118,7 @@
         }
         return category;
     }
+
 
     public async Task<List<Products>> GetProducts(int categoryId)
     {

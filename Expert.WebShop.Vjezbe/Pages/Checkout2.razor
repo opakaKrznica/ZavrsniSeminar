@@ -1,13 +1,16 @@
-﻿@page "/checkout2"
+﻿@page "/checkout2/{orderId}"
 @using Expert.WebShop.Vjezbe.models;
 @inject HttpClient httpClient;
 @inject NavigationManager navManager;
 
 
 
+
  <section class="d-flex justify-content-center bg-secondary bg-gradient ">
+
         <ul class="list-unstyled  p-5 text-center">
-            @foreach (BuyItems item in Orders)   
+
+            @foreach (var item in Orders.OrderBy(x => x.OrderId))   
             {
                 <li class="pt-3">
                     <div class="container">
@@ -64,18 +67,25 @@
 
 
 @code {
-
+    public Guid orderId;
     private List<BuyItems> Orders = new List<BuyItems>();
 
 
-    protected override async Task OnInitializedAsync()
+    public async Task OnInitializedAsync(Guid orderId)
     {
-        var result = await httpClient.GetAsync($"{Constants.BaseUrl}/ShoppingCards");
+        
+        if(Orders.FirstOrDefault(x => x.OrderId == orderId) == null)
+        {
+         var result = await httpClient.GetAsync($"{Constants.BaseUrl}/ShoppingCards/{orderId}");
+        
+
         if (result.IsSuccessStatusCode)
         {
             Orders = await result.Content.ReadFromJsonAsync<List<BuyItems>>();
         }
+        }
     }
+
 
 
 }

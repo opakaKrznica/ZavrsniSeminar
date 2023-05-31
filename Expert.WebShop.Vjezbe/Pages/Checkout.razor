@@ -5,9 +5,10 @@
 @inject NavigationManager navManager
 
 
+
 <h3>Fill your personal details</h3>
 
-<form @onsubmit="CheckoutItems">
+<form @onsubmit="()=>CheckoutItems(orderId)">
 
     <div class="row mb-3">
         <label for="Name" class="col-sm-2 col-form-label">Full Name</label>
@@ -30,7 +31,7 @@
   
 
 
-    <button type="submit" class="btn btn-primary">Kupi</button>
+    <button type="submit" class="btn btn-primary">Check Out</button>
 
 </form>
 @code {
@@ -38,13 +39,15 @@
     public string ImeOsobe;
     public decimal TotalAmount;
     public string  Adress;
-
+    public Guid orderId;
 
     
+    
 
-    public async Task CheckoutItems()
+    public async Task CheckoutItems(Guid orderId)
     {
-        Guid orderId = Guid.NewGuid();
+         orderId = Guid.NewGuid();
+
         foreach (var item in shoppingCartInMemory.selectedItems)
         {
             BuyItems cartItem = new BuyItems();
@@ -82,7 +85,7 @@
 
             if (add.IsSuccessStatusCode)
             {
-                navManager.NavigateTo("/");
+                navManager.NavigateTo($"/checkout2/{orderId}");
             }
         }
 
