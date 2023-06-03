@@ -77,9 +77,7 @@
     private async Task CategoryAdd()
     {
         await ijsRun.InvokeVoidAsync("alert", "You successfully Added Category!!!");
-
-        //var result = new HttpResponseMessage();
-
+                
          var result = await httpClient.PostAsJsonAsync($"{Constants.BaseUrl}/Categories", category);
 
         if (result.IsSuccessStatusCode)

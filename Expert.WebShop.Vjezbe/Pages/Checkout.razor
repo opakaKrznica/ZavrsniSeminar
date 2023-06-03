@@ -5,48 +5,60 @@
 @inject NavigationManager navManager
 
 
+<div class="container-md Width ">
 
-<h3>Fill your personal details</h3>
-
-<form @onsubmit="()=>CheckoutItems(orderId)">
-
-    <div class="row mb-3">
-        <label for="Name" class="col-sm-2 col-form-label">Full Name</label>
-        <div class="col-sm-10">
-            <input type="text" @bind-value="ImeOsobe" class="form-control" id="Name">
-        </div>
+    <div class="indigo text-center p-3">
+        <h3>Fill your personal details</h3>
     </div>
-    <div class="row mb-3">
-        <label for="Adress" class="col-sm-2 col-form-label">Adress</label>
-        <div class="col-sm-10">
-            <input type="text" @bind-value="Adress" class="form-control" id="Adress">
-        </div>
-    </div>
-    <div class="row mb-3">
-        <label for="Email" class="col-sm-2 col-form-label">Email</label>
-        <div class="col-sm-10">
-            <input type="text" @bind-value="Email" class="form-control" id="Email">
-        </div>
-    </div>
-  
 
+   
 
-    <button type="submit" class="btn btn-primary">Check Out</button>
+    <form @onsubmit="CheckoutItems">
 
-</form>
+        <div class="container bg-secondary bg-gradient text-light p-4 ">
+
+            <div class="input-group mb-3">
+                <span class="input-group-text" id="inputGroup-sizing-default">Full Name :</span>
+                <input type="text" @bind-value="ImeOsobe" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+            </div>
+
+            <div class="input-group mb-3">
+                <span class="input-group-text" id="inputGroup-sizing-default">Adress :</span>
+                <input type="text" @bind-value="Adress" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+            </div>
+
+            <div class="input-group mb-3 ">
+                <span class="input-group-text" id="inputGroup-sizing-default">Email :</span>
+                <input type="text" @bind-value="Email" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+            </div>
+
+          
+
+                <div class="d-flex justify-content-between pt-3">
+                    <button type="submit" class="btn indigo rounded-2 border-dark border-bottom border-end border-2 p-2">Check Out</button>
+
+                    <button type="button" class="btn indigo rounded-2 border-dark border-bottom border-end border-2 p-2" @onclick="Return">
+                        Go Back
+                    </button>
+                </div>
+            </div>
+        
+    </form>
+</div>
+
 @code {
     public string Email;
     public string ImeOsobe;
     public decimal TotalAmount;
     public string  Adress;
-    public Guid orderId;
+    
 
     
     
 
-    public async Task CheckoutItems(Guid orderId)
+    public async Task CheckoutItems()
     {
-         orderId = Guid.NewGuid();
+        Guid orderId = Guid.NewGuid();
 
         foreach (var item in shoppingCartInMemory.selectedItems)
         {
@@ -85,10 +97,15 @@
 
             if (add.IsSuccessStatusCode)
             {
-                navManager.NavigateTo($"/checkout2/{orderId}");
+                navManager.NavigateTo("/Admin/orders-list");
             }
         }
 
+    }
+
+    private async void Return()
+    {
+        navManager.NavigateTo("/shopping-cart");
     }
 
 }

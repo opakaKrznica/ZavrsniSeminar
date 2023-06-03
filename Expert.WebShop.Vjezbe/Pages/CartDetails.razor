@@ -44,8 +44,7 @@
 
                         <div class="card  text-center p-2 mt-3">
 
-@*                        <img class="card-img-top img-thumbnail mx-auto d-block w-75" src=@Products.product.ImagePath alt="neka slika..">
-*@
+
                             <div class="card-body">
                                 <h3 class="card-title bg-info text-dark rounded-2 p-2">
                                     @item.Product.ProductName
@@ -88,6 +87,8 @@
                                                 <h4 class=" fw-bold"> Discounted price: @result Eur</h4> (Unit price:
                                                 @item.Product.ProductPrice * @item.NumberOfItems / Discount: @item.Product.Discount%)
                                             </div>
+                                        }
+
                                             <div class="form-outline w-50 d-inline-flex align-items-center">
                                                 <div>
                                                     <button type="button" class="btn btn-info btn-lg p-2 px-2" @onclick="()=>Decrement(item.ProductId)"> - </button>
@@ -103,7 +104,7 @@
                                                 </div>
 
                                             </div>
-                                        }
+                                        
                                         <div>
 
                                             <button type="button" class="btn-danger btn-lg mt-3 p-2 " @onclick="()=>DeleteProd(item.ProductId)">

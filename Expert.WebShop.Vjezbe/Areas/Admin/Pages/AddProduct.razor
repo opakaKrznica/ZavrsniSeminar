@@ -2,6 +2,7 @@
 @using Expert.WebShop.Vjezbe.models;
 @inject NavigationManager navManager;
 @inject HttpClient httpClient;
+@inject IJSRuntime ijsRun;
 
 
 
@@ -73,6 +74,8 @@
 
     private async Task ProductsAdd()
     {
+        await ijsRun.InvokeVoidAsync("alert", "You successfully Added Category!!!");
+
         var result = await httpClient.PostAsJsonAsync($"{Constants.BaseUrl}/Products", products);
 
         if (result.IsSuccessStatusCode)
