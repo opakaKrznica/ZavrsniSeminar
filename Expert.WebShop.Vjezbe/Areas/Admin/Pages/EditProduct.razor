@@ -14,8 +14,23 @@
         <div class="container bg-secondary bg-gradient text-light p-4 ">
                     
         <div class="input-group mb-3">
-            <span class="input-group-text" id="inputGroup-sizing-default">Category Id :</span>
-            <input type="text" @bind-value="products.CategoryId" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+            <span class="input-group-text" id="inputGroup-sizing-default">Category Group :</span>
+                @* <input type="text" @bind-value="products.CategoryId" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">*@
+                <select @onchange=@(SelectCategory) class="form-control" id="SelectCat">
+
+                    <option value="">--Select--</option>
+                    @foreach (var cat in categories)
+                    {
+                        if (cat.Id == products.CategoryId)
+                        {
+                            <option value="@cat.Id" selected>@cat.CategoryName</option>
+                        }
+                        else
+                        {
+                            <option value="@cat.Id">@cat.CategoryName</option>
+                        }
+                    }
+                </select>
         </div>
 
         <div class="input-group mb-3">
@@ -63,6 +78,7 @@
     public int Id { get; set; }
 
     private Products products = new Products();
+    List<Category> categories = new List<Category>();
 
     private bool IsError = false;
 
@@ -72,6 +88,8 @@
         if (result.IsSuccessStatusCode)
         {
             products = await result.Content.ReadFromJsonAsync<Products>();
+
+            categories = await CategoryList();
         }
     }
 
@@ -95,6 +113,22 @@
             IsError = true;
             StateHasChanged();
         }
+    }
+
+    private async Task SelectCategory(ChangeEventArgs e)
+    {
+        products.CategoryId = Convert.ToInt32(e.Value.ToString());
+    }
+
+    protected async Task<List<Category>> CategoryList()
+    {
+        var result = await httpClient.GetAsync($"{Constants.BaseUrl}/Categories");
+        if (result.IsSuccessStatusCode)
+        {
+            categories = await result.Content.ReadFromJsonAsync<List<Category>>();
+
+        }
+        return categories;
     }
 
     private async void Return()

@@ -1,9 +1,9 @@
 ﻿@page "/Admin/files-update/{id:int}"
-@inject HttpClient Http
-@using System.IO
+@inject HttpClient Http;
+@using System.IO;
 @using Expert.WebShop.Vjezbe.models;
 @inject NavigationManager navManager;
-
+@inject IJSRuntime ijsRun;
 
 
 <!--<div class="container-md Width ">
@@ -99,7 +99,7 @@
 
             if (upload.IsSuccessStatusCode)
             {
-                var a = "test";
+                await ijsRun.InvokeVoidAsync("alert", "You successfully Uploaded files!!!");
             }
         }
         Message = $"{selectedFiles.Count} file(s) uploaded on server";

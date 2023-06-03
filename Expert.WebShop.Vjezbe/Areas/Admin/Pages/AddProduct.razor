@@ -15,7 +15,7 @@
     @if (IsError)
     {
         <div class="text-dark bg-info text-center p-3 h4">
-            Upps! There was a mistake. Don't forget correct Category Id !!!'.
+            Upps! There was a mistake!
         </div>
 
     }
@@ -24,8 +24,22 @@
         <div class="container bg-secondary bg-gradient text-light p-4 ">
 
             <div class="input-group mb-3">
-                <span class="input-group-text" id="inputGroup-sizing-default">Category Id :</span>
-                <input type="text" @bind-value="products.CategoryId" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+                <span class="input-group-text" id="inputGroup-sizing-default">Category Group :</span>
+                <select @onchange=@(SelectCategory) class="form-control" id="SelectCat">
+
+                    <option value="">--Select--</option>
+                    @foreach (var cat in categories)
+                    {
+                        if (cat.Id == products.CategoryId)
+                        {
+                            <option value="@cat.Id" selected>@cat.CategoryName</option>
+                        }
+                        else
+                        {
+                            <option value="@cat.Id">@cat.CategoryName</option>
+                        }
+                    }
+                </select>
             </div>
 
             <div class="input-group mb-3">
@@ -70,16 +84,41 @@
 
 @code {
     private Products products = new Products();
+    List<Category> categories = new List<Category>();
+
     private bool IsError = false;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await CategoryList();
+    }
+
+    private async Task SelectCategory(ChangeEventArgs e)
+    {
+        products.CategoryId = Convert.ToInt32(e.Value.ToString());
+    }
+
+    protected async Task<List<Category>> CategoryList()
+    {
+        var result = await httpClient.GetAsync($"{Constants.BaseUrl}/Categories");
+        if (result.IsSuccessStatusCode)
+        {
+            categories = await result.Content.ReadFromJsonAsync<List<Category>>();
+
+        }
+        return categories;
+    }
 
     private async Task ProductsAdd()
     {
-        await ijsRun.InvokeVoidAsync("alert", "You successfully Added Category!!!");
+        
 
         var result = await httpClient.PostAsJsonAsync($"{Constants.BaseUrl}/Products", products);
 
         if (result.IsSuccessStatusCode)
         {
+            await ijsRun.InvokeVoidAsync("alert", "You successfully Added Category!!!");
+
             navManager.NavigateTo("/Admin/product-list");
         }
         else
@@ -88,6 +127,8 @@
             StateHasChanged();
         }
     }
+
+
 
     private async void Return()
     {

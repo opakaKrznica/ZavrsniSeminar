@@ -33,47 +33,47 @@
             {
                 <li>
 
-                <div class="container">
-                    <div class="card p-sm-3">
+                    <div class="container">
+                        <div class="card p-sm-3">
 
-                        <div>
-                            @{
-                                var images = productImages.Where(x => x.ProductId == item.Id).ToList();
-                                foreach (var image in images)
-                                {
-                                    <img class="card-img-top img-thumbnail mx-auto d-block w-75 " src=@image.imagePath alt="neka slika..">
+                            <div>
+                                @{
+                                    var images = productImages.Where(x => x.ProductId == item.Id).ToList();
+                                    foreach (var image in images)
+                                    {
+                                        <img class="card-img-top img-thumbnail mx-auto d-block w-75 " src=@image.imagePath alt="neka slika..">
+                                    }
+
                                 }
-
-                            }
-                        </div>
-                        <div class="card-body">
-
-                            <h5 class="card-title h2">
-                                @item.ProductName
-                            </h5>
-                            <p class="card-text fs-4 ">
-                                @item.ProductDescription
-                            </p>
-
-                            <p class="card-text lead">
-                                Price: @item.ProductPrice Eur
-                            </p>
-
-                            <p class="card-text pb-2">
-                                Discount:@item.Discount %
-                            </p>
-                            
-                               
-                            <div class="d-flex justify-content-between">
-                                <button type="button" @onclick="()=>EditProd(item.Id)" class="btn indigo px-md-5 "> EDIT </button>
-                                <button type="button" @onclick="()=>DeleteProd(item.Id)" class="btn btn-danger px-md-4  ">DELETE</button>
-                                <button type="button" @onclick="()=>UpdateFiles(item.Id)" class="btn btn-warning">UPDATE Img.</button>
                             </div>
-                        </div>
+                            <div class="card-body">
 
-                        <button type="button" class="btn btn-success p-2 mx-2 fs-5" @onclick="()=>GoToDetails(item.Id)">DETAILS</button>
+                                <h1 class="card-title">
+                                    @item.ProductName
+                                </h1>
+                                <p class="card-text fs-5 ">
+                                    @item.ProductDescription
+                                </p>
+
+                                <p class="card-text fs-4">
+                                    Price: @item.ProductPrice Eur
+                                </p>
+
+                                <p class="card-text pb-2 fs-5">
+                                    Discount:@item.Discount %
+                                </p>
+
+
+                                <div class="d-flex justify-content-between">
+                                    <button type="button" @onclick="()=>EditProd(item.Id)" class="btn indigo text-light px-md-5 "> EDIT </button>
+                                    <button type="button" @onclick="()=>DeleteProd(item.Id)" class="btn btn-danger px-md-4  ">DELETE</button>
+                                    <button type="button" @onclick="()=>UpdateFiles(item.Id)" class="btn btn-warning">UPDATE Img.</button>
+                                </div>
+                            </div>
+
+                            @* <button type="button" class="btn btn-success p-2 mx-2 fs-5" @onclick="()=>GoToDetails(item.Id)">DETAILS</button>*@
+                        </div>
                     </div>
-</div>
                 </li>
                 <br />
                 <br />

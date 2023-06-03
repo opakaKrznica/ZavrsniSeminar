@@ -30,8 +30,8 @@
         <div class="container bg-secondary bg-gradient text-light p-4 ">
 
             <div class="input-group mb-3">
-                <span class="input-group-text" id="inputGroup-sizing-default">Category Id :</span>
-                <input type="text" @bind-value="category.Id" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+                <span class="input-group-text" id="inputGroup-sizing-default">Category Id - Self Generated</span>
+                <input type="text" @bind-value="category.Id" placeholder="Disabled input" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
             </div>
 
             <div class="input-group mb-3">
@@ -76,12 +76,14 @@
 
     private async Task CategoryAdd()
     {
-        await ijsRun.InvokeVoidAsync("alert", "You successfully Added Category!!!");
+        
                 
          var result = await httpClient.PostAsJsonAsync($"{Constants.BaseUrl}/Categories", category);
 
         if (result.IsSuccessStatusCode)
         {
+            await ijsRun.InvokeVoidAsync("alert", "You successfully Added Category!!!");
+
             navManager.NavigateTo("Admin/category-list");
         }
         else
