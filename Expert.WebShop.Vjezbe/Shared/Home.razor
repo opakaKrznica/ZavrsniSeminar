@@ -13,8 +13,8 @@
 
 <div class="container-md Width">
 
-       <section class="d-flex justify-content-center bg-secondary bg-gradient ">
-        <ul class="list-unstyled  p-5 text-center">
+       <section class="d-flex justify-content-center  ">
+        <ul class="list-unstyled  p-3 text-center">
             @foreach (Category item in categories)
             {
                 <li class="pt-3">
@@ -29,8 +29,8 @@
                                 <p class="card-title h5">
                                     ID: @item.Id
                                 </p>
-                                                              
-                                <button type="button" @onclick="()=>GoTo(item.Id)" class="shadow-lg p-3 btn btn-outline-light my-3 bg-white rounded text-black fs-1 " style="width: 18rem">  @item.CategoryName </button>
+
+                                <button type="button" @onclick="()=>GoTo(item.Id)" class="shadow-lg p-3 btn btn-outline-light my-3 bg-white rounded text-black text space fs-1 " style="width: 18rem">  @item.CategoryName </button>
                                
                                 <p class="card-text h5 mb-4">
                                     @item.CategoryDescription

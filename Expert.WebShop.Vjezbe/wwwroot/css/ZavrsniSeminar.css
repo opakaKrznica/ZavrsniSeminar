@@ -1,12 +1,36 @@
 ﻿@media (min-width: 768px) {
 
-    .Width { 
-        width: 75%;  }
+    .Width {
+        width: 75%;
+    }
 
     .indigo {
         background-color: #3A0647;
     }
+}
 
+.space {
+    letter-spacing:3px;
+}
+
+.spec {
+    font-family: 'Berlin Sans FB', Arial, sans-serif;
+    color: floralwhite;
+    font-size: x-large;
+    text-shadow: 0 0 6px white;
+    
+}
+.spec:hover {
+    font-family: 'Berlin Sans FB', Arial, sans-serif;
+    color: black;
+    font-size: x-large;
+    text-shadow: 0 0 6px white;
+}
+
+.fontIN {
+    color: #0058A6;
+    font-weight: 600;
+    font-family: 'Nunito', Arial, sans-serif;
 }
 
 
@@ -15,17 +39,21 @@
     color: floralwhite;
 }
 
+.grayBg {
+    background-color: #DADFE3;
+}
+
 .footInd {
     background-color: #3A0647;
 }
 
 .whiteColor {
     color: white;
-    background-color:white;
+    background-color: white;
 }
 
-.border {
+/*.border {
     color: #062565;
     background-color:floralwhite;
-}
+}*/
 

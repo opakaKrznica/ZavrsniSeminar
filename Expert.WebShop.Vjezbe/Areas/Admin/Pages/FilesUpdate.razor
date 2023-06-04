@@ -6,44 +6,27 @@
 @inject IJSRuntime ijsRun;
 
 
-<!--<div class="container-md Width ">
 
-    <div class="bg-warning text-dark font-weight-bolder p-3 d-flex justify-content-between">
-
-        <h2 class="pt-3 ">Update files</h2>
-        <button type="button" class="btn-secondary rounded-2 m-3 p-2 " @onclick="Return">
-            Back to products
-        </button>
-    </div>
-
-    <form class="d-flex justify-content-around align-items-center bg-secondary bg-gradient" style="height:120px;">
-    <div @onsubmit="OnSubmit">
-        <InputFile OnChange="OnInputFileChange" multiple />
-
-        <button class="bg-warning text-dark" type="submit">Upload Selected File(s)</button>
-    </div>
-    </form>
-</div>-->
 <div class="container-md Width "
 
-      <nav class="navbar bg-warning bg-gradient  p-2 d-flex justify-content-around sticky-top">
+      <nav class="navbar indigo  p-2 d-flex justify-content-around sticky-top">
 
            <h2 class="pt-2 ">Update files</h2>
 
-             <button type="button" class="btn-secondary rounded-2 m-3 p-2 " @onclick="Return">
+             <button type="button" class="bg-secondary rounded-2 text-light m-3 p-2 " @onclick="Return">
                Back to products
            </button>
       </nav>
 
-    <div class="flex-column justify-content-between align-items-center bg-secondary bg-gradient">
+    <div class="flex-column justify-content-between align-items-center grayBg">
 
-        <form class="d-md-flex justify-content-around align-items-center  pt-5"  @onsubmit="OnSubmit">
+        <form class="d-md-flex justify-content-around align-items-center px-5 pt-5"  @onsubmit="OnSubmit">
             <div >
                 <InputFile OnChange="OnInputFileChange" multiple class="fs-5"/>
             </div>
 
                  <br /><br /><br />
-              <button class=" bg-warning text-dark fs-5 p-2" type="submit">Upload Selected File(s)</button>
+              <button class=" bg-warning text-dark fs-5 p-2" type="submit">Upload Files</button>
 
 
         </form>
@@ -100,6 +83,10 @@
             if (upload.IsSuccessStatusCode)
             {
                 await ijsRun.InvokeVoidAsync("alert", "You successfully Uploaded files!!!");
+            }
+            else
+            {
+                await ijsRun.InvokeVoidAsync("alert", "Nothing choosen, try harder!!!");
             }
         }
         Message = $"{selectedFiles.Count} file(s) uploaded on server";
