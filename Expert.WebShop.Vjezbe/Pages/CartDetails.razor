@@ -3,6 +3,7 @@
 @inject ShoppingCartInMemory shoppingCartInMemory;
 @inject HttpClient httpClient;
 @inject NavigationManager navManager;
+@inject IJSRuntime ijsRun;
 
 
 <div class="container-md Width ">
@@ -46,7 +47,7 @@
 
 
                             <div class="card-body">
-                                <p class="card-title indigo text-light rounded-2  fs-1 spec ">
+                                <p class="card-title indigo text-light rounded-2  fs-1 ">
                                     @item.Product.ProductName
                                 </p>
                                 <br /><br />
@@ -182,27 +183,31 @@
                 Convert.ToDouble(item.Product.ProductPrice));
 
                 getPrice = Math.Round(Convert.ToDouble(item.Product.ProductPrice) - discount, 2);
-               
+
 
 
                 SumDiscount = SumDiscount + (getPrice * item.NumberOfItems);
             }
 
-            
+
 
         }
     }
- 
+
 
 
     private async Task DeleteProd(int id)
-    {
+    {      
+        var confirm = await ijsRun.InvokeAsync<bool>("confirm", "You sure for changes?"); /*invokanje JS u C# , odlazi u IF*/
+
+        if (confirm == true)
+        {
         var delete = shoppingCartInMemory.selectedItems.FirstOrDefault(x => x.ProductId == id);
 
         shoppingCartInMemory.selectedItems.Remove(delete);
         await TotalCash();
         StateHasChanged();
-
+        }
     }
 
     private async void Return()

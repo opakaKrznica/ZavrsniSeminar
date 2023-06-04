@@ -110,8 +110,7 @@
     }
 
     private async Task ProductsAdd()
-    {
-        
+    {        
 
         var result = await httpClient.PostAsJsonAsync($"{Constants.BaseUrl}/Products", products);
 

@@ -53,8 +53,6 @@
     private async Task Delete(int Id)
     {
 
-        //await ijsRun.InvokeVoidAsync("alert", "Pazite! Pokusavate izbrisati kategoriju!");
-
         var result = new HttpResponseMessage();
 
         var confirm = await ijsRun.InvokeAsync<bool>("confirm", " DELETE? Are you sure? ");

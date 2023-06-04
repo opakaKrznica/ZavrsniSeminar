@@ -63,10 +63,9 @@
                                 </p>
 
 
-                                <div class="d-flex justify-content-between">
+                                <div class="d-flex justify-content-around">
                                     <button type="button" @onclick="()=>EditProd(item.Id)" class="btn indigo text-light px-md-5 "> EDIT </button>
                                     <button type="button" @onclick="()=>DeleteProd(item.Id)" class="btn btn-danger px-md-4  ">DELETE</button>
-                                    <button type="button" @onclick="()=>UpdateFiles(item.Id)" class="btn btn-warning">UPDATE</button>
                                 </div>
                             </div>
 
@@ -131,11 +130,6 @@
     async void GoToDetails(int Id)
     {
         navManager.NavigateTo($"/product-details/{Id}");
-    }
-
-    async void UpdateFiles(int Id)
-    {
-        navManager.NavigateTo($"/Admin/files-update/{Id}");
     }
 
     private async void Return()

@@ -17,9 +17,23 @@
     font-family: 'Berlin Sans FB', Arial, sans-serif;
     color: floralwhite;
     font-size: x-large;
-    text-shadow: 0 0 6px white;
+    text-shadow: 0 0 1px white;
     
 }
+
+.spec2 {
+    
+    color: floralwhite;
+    font-size: x-large;
+    text-shadow: 0 0 3px white;
+}
+
+.spec3 {
+    color: floralwhite;
+    font-size: x-large;
+    text-shadow: 2px 2px 2px #DADFE3;
+}
+
 .spec:hover {
     font-family: 'Berlin Sans FB', Arial, sans-serif;
     color: black;
