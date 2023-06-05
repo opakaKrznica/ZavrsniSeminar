@@ -25,6 +25,7 @@
 
     <section class="d-flex justify-content-center grayBg">
         <ul class="list-unstyled  p-2 text-center">
+
             @foreach (Category item in categories)   //ovdje ide inace  var umjesto category,dodje isto
             {
                 <li class="pt-3">
@@ -37,7 +38,7 @@
                             <div class="card-body ">
 
                                 <p class="card-title h5">
-                                  ID: @item.Id
+                                    ID: @item.Id
                                 </p>
 
                                 <h5 class="card-title h2">
@@ -55,7 +56,6 @@
                         </div>
                     </div>
                 </li>
-
             }
         </ul>
     </section>

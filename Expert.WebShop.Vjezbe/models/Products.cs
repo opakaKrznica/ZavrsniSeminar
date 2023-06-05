@@ -9,7 +9,7 @@
         public int Discount { get; set; }
         public int CategoryId { get; set; }
         public string ImagePath { get; set; }
-
+        public bool IsHidden { get; set; }
         public double SumDiscount { get; set; }
     }
 }

@@ -32,9 +32,9 @@
     }
 
 
-    <section class="d-flex justify-content-center text-center bg-secondary bg-gradient">
+    <section class="d-flex justify-content-center text-center grayBg">
 
-        <ul class="list-unstyled  p-5">
+        <ul class="list-unstyled  p-3">
 
             @foreach (var item in shoppingCartInMemory.selectedItems.OrderBy(x => x.ProductId))
             {
@@ -43,7 +43,7 @@
                 <li>
                     
 
-                        <div class="card  text-center p-2 mt-3">
+                        <div class="card  text-center mt-3">
 
 
                             <div class="card-body">
@@ -90,17 +90,17 @@
                                             </div>
                                         }
 
-                                            <div class="form-outline w-50 d-inline-flex align-items-center">
+                                            <div class="form-outline d-inline-flex w-50 align-items-center">
                                                 <div>
-                                            <button type="button" class="btn indigo text-light btn-lg p-2 fs-4 px-2 spec" @onclick="()=>Decrement(item.ProductId)"> - </button>
+                                            <button type="button" class="btn indigo text-light btn-lg p-2 fs-4 px-md-4 spec" @onclick="()=>Decrement(item.ProductId)"> - </button>
                                                 </div>
                                                 <div>
 
-                                                    <input class="form-control font-monospace fs-4 text-center px-2 ps-4" type="number" @bind-value="item.NumberOfItems" disabled="disabled">
+                                                    <input class="form-control fs-4 text-center  pe-0" type="number" @bind-value="item.NumberOfItems" disabled="disabled">
                                                 </div>
                                                 <div>
 
-                                                    <button type="button" class="btn indigo text-light btn-lg fs-4 p-2 px-2 spec" @onclick="()=>Increment(item.ProductId)"> + </button>
+                                                    <button type="button" class="btn indigo text-light btn-lg fs-md-4 p-2 px-md-4 spec" @onclick="()=>Increment(item.ProductId)"> + </button>
 
                                                 </div>
 
@@ -120,9 +120,7 @@
                 </li>
 
             }
-            <!--<div class="card-text bg-info text-center border-dark border-bottom border-end border-2 rounded-2 m-2 p-4" style=" width: 20rem">
-                <h4>Total cash: @sum Eur</h4>
-            </div>-->
+          
         </ul>
     </section>
 
@@ -167,7 +165,7 @@
 
     public async Task TotalCash()
     {
-
+          SumDiscount = 0;
         foreach (var item in shoppingCartInMemory.selectedItems.OrderBy(x => x.ProductId))
         {
             if (item.Product.Discount < 1)
@@ -186,10 +184,8 @@
 
 
 
-                SumDiscount =  (getPrice * item.NumberOfItems);
+                SumDiscount = SumDiscount + (getPrice * item.NumberOfItems);
             }
-
-
 
         }
     }
