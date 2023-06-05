@@ -28,7 +28,7 @@
     </nav>
 
     @{
-        double sum = 0;
+        decimal sum = 0;
     }
 
 
@@ -68,8 +68,8 @@
                                     @{
                                         if (item.Product.Discount < 1)
                                         {
-                                            var sumItem = Convert.ToDouble(item.Product.ProductPrice)
-                                            * Convert.ToDouble(item.NumberOfItems);
+                                        var sumItem = Convert.ToDecimal(item.Product.ProductPrice)
+                                            * Convert.ToDecimal(item.NumberOfItems);
                                             sum = sum + sumItem;
                                             <p class="card-text fs-4 fw-bold">
                                                 Product price: @sumItem  Eur
@@ -77,10 +77,10 @@
                                         }
                                         else
                                         {
-                                            var discount = ((Convert.ToDouble(item.Product.Discount) / 100)
-                                            * Convert.ToDouble(item.Product.ProductPrice));
+                                        var discount = ((Convert.ToDecimal(item.Product.Discount) / 100)
+                                        * Convert.ToDecimal(item.Product.ProductPrice));
                                             var result = Math
-                                            .Round(Convert.ToDouble(item.Product.ProductPrice) - discount, 2);
+                                        .Round(Convert.ToDecimal(item.Product.ProductPrice) - discount, 2);
                                             result = result * item.NumberOfItems;
                                             sum = sum + result;
 
@@ -90,9 +90,9 @@
                                             </div>
                                         }
 
-                                            <div class="form-outline d-inline-flex w-50 align-items-center">
+                                            <div class="form-outline d-inline-flex w-25 align-items-center">
                                                 <div>
-                                            <button type="button" class="btn indigo text-light btn-lg p-2 fs-4 px-md-4 spec" @onclick="()=>Decrement(item.ProductId)"> - </button>
+                                            <button type="button" class="btn indigo  text-light btn-lg p-2 fs-4 px-md-4 spec" @onclick="()=>Decrement(item.ProductId)"> - </button>
                                                 </div>
                                                 <div>
 
@@ -129,7 +129,7 @@
 
 
 @code {
-    double SumDiscount = 0;
+    decimal SumDiscount = 0;
 
     protected override async Task OnInitializedAsync()
     {
@@ -170,17 +170,17 @@
         {
             if (item.Product.Discount < 1)
             {
-                SumDiscount = SumDiscount + Convert.ToDouble(item.Product.ProductPrice) *
-            Convert.ToDouble(item.NumberOfItems);
+                SumDiscount = SumDiscount + Convert.ToDecimal(item.Product.ProductPrice) *
+            Convert.ToDecimal(item.NumberOfItems);
             }
             else
             {
-                var getPrice = Convert.ToDouble(item.Product.ProductPrice);
+                var getPrice = Convert.ToDecimal(item.Product.ProductPrice);
 
-                var discount = ((Convert.ToDouble(item.Product.Discount) / 100) *
-                Convert.ToDouble(item.Product.ProductPrice));
+                var discount = ((Convert.ToDecimal(item.Product.Discount) / 100) *
+                Convert.ToDecimal(item.Product.ProductPrice));
 
-                getPrice = Math.Round(Convert.ToDouble(item.Product.ProductPrice) - discount, 2);
+                getPrice = Math.Round(Convert.ToDecimal(item.Product.ProductPrice) - discount, 2);
 
 
 
