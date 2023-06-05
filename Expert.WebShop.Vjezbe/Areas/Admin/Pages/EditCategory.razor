@@ -76,7 +76,7 @@
         }
     }
 
-    private async Task ChangeRadioValue()
+    public async Task ChangeRadioValue()
     {
         if (category.IsHidden == true)
         {
@@ -84,7 +84,7 @@
         }
         else
         {
-            category.IsHidden = false;
+            category.IsHidden = true;
         }
 
     }
