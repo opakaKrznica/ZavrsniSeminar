@@ -62,14 +62,18 @@
 
         if(confirm == true){
 
-         result = await httpClient.DeleteAsync($"{Constants.BaseUrl}/Products/{id}");
+            result = await httpClient.DeleteAsync($"{Constants.BaseUrl}/Products/{id}");
 
+            if (result.IsSuccessStatusCode)
+            {
+                navManager.NavigateTo("Admin/product-list/");
+            }
         }
-
-        if(result.IsSuccessStatusCode)
+        else
         {
-            navManager.NavigateTo("Admin/product-list/");
+            navManager.NavigateTo($"/Admin/delete-product/{id}");
         }
+
     }
 
     private async void Return()

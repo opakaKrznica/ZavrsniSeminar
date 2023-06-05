@@ -61,14 +61,17 @@
         {
             result = await httpClient.DeleteAsync($"{Constants.BaseUrl}/Categories/{Id}");
 
+            if (result.IsSuccessStatusCode)
+            {
+                navManager.NavigateTo("/Admin/category-list");
+            }
         }
-
-
-        if (result.IsSuccessStatusCode)
+        else
         {
-            navManager.NavigateTo("Admin/category-list");
+            navManager.NavigateTo($"/Admin/delete-category/{Id}");
         }
-     
+
+
     }
 
     private async void Return()
