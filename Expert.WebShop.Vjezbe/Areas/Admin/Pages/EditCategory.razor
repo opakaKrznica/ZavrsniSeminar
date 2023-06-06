@@ -30,7 +30,7 @@
 
             <div class="col-12 pt-3">
                  <div class="form-check">
-                <input class="form-check-input" @bind-value="category.IsHidden" @oninput="@ChangeRadioValue" type="checkbox" id="flexCheckChecked">
+                    <input class="form-check-input" checked="@category.IsHidden"  @oninput="@ChangeRadioValue" type="checkbox" id="flexCheckChecked">
                     <label class="form-check-label" for="flexCheckChecked">It is hidden!</label>
                 </div>
                 

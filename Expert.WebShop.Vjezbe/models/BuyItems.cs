@@ -8,8 +8,6 @@
 
         public string OrderedByName { get; set; } = null!;
 
-        public string OrderByAdress { get; set; } = null!;
-
         public string OrderedByEmail { get; set; } = null!;
 
         public Guid OrderId { get; set; }

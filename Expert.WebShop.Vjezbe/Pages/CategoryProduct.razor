@@ -3,9 +3,6 @@
 @inject HttpClient httpClient;
 @inject NavigationManager navManager;
 
-@{
-    bool IsHidden = true;
-}
 
 
 <div class="container-md Width">
@@ -39,41 +36,38 @@
 
             @foreach (var item in products)
             {
-                
-
                 if (item.IsHidden == false)
                 {
-                    <li>
-                        <div class="card p-sm-3">
+                <li>
+                    <div class="card p-sm-3">
 
-                            <div>
-                                @{
-                                    var images = productImages.Where(x => x.ProductId == item.Id).ToList();
-                                    foreach (var image in images)
-                                    {
-                                        <img class="img-thumbnail rounded-2 w-75 " src=@image.imagePath alt="neka slika..">
-                                    }
-
+                        <div>
+                            @{
+                                var images = productImages.Where(x => x.ProductId == item.Id).ToList();
+                                foreach (var image in images)
+                                {
+                                    <img class="img-thumbnail rounded-2 w-75 " src=@image.imagePath alt="neka slika..">
                                 }
-                            </div>
-
-                            <div class="card-body ">
-                                <h5 class="card-title space h2">
-                                    @item.ProductName
-                                </h5>
-                                <p class="card-text">
-                                    @item.ProductDescription
-                                </p>
-                                <p class="card-text fs-5">
-                                    Price:  @item.ProductPrice  Eur
-                                </p>
-                            </div>
-                            <button type="button" class="btn btn-success p-2" @onclick="()=>GoToDetails(item.Id)">DETAILS</button>
+                            }
                         </div>
-                    </li>
-                    <br />
-                    <br />
-                }
+
+                        <div class="card-body ">
+                            <h5 class="card-title space h2">
+                                @item.ProductName
+                            </h5>
+                            <p class="card-text">
+                                @item.ProductDescription
+                            </p>
+                            <p class="card-text fs-5">
+                                Price:  @item.ProductPrice  Eur
+                            </p>
+                        </div>
+                        <button type="button" class="btn btn-success p-2" @onclick="()=>GoToDetails(item.Id)">DETAILS</button>
+                    </div>
+                </li>
+                <br />
+                <br />
+            }
             }
         </ul>
     </section>
@@ -88,7 +82,6 @@
 
     private Category category = new Category();
     private List<Products> products = new List<Products>();
-
     private List<ImageFilePath> productImages = new List<ImageFilePath>();
 
 

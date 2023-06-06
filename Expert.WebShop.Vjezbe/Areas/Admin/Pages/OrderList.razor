@@ -19,80 +19,79 @@
 
     </nav>
 
-  
+
 
     <section class="d-flex justify-content-center text-center grayBg mb-5">
-    
-        <ul class="list-unstyled ">
+
+        <ul class="list-unstyled descending">
 
             @foreach (var item in distinctOrders)
             {
                 decimal GrandTotal = 0;
+                <ol>
+                    <li class="my-5 bg-light">
+                        <div class="card  text-center p-2 m-3">
+                            <p class="card-text fs-4 bg-secondary spec2 p-3 text-decoration-underline">Order Id: @item.OrderId</p>
 
-                <li class="my-5 bg-light">
-                    <div class="card  text-center p-2 m-3">
-                        <p class="card-text fs-4 bg-secondary spec2 p-3 text-decoration-underline">Order Id: @item.OrderId</p>
+                            <p class="card-text fs-4">Name : @item.OrderedByName</p>
+                            <p class="card-text fs-4">Mail : @item.OrderedByEmail</p>
 
-                        <p class="card-text fs-4">Name : @item.OrderedByName</p>
-                        <p class="card-text fs-4">Adress : @item.OrderByAdress</p>
-                        <p class="card-text fs-4">Mail : @item.OrderedByEmail</p>
+                        </div>
+                        <ul class="list-unstyled">
 
-                    </div>
-                    <ul class="list-unstyled">
-
-                        @foreach (var product in ordersList.Where(x => x.OrderId == item.OrderId).ToList())
-                        {
-                          
-
-                            <li class="list-unstyled  p-1">
-
-                                <div class="card  text-center p-2 mt-3">
-
-                                    <div class="card-body">
+                            @foreach (var product in ordersList.Where(x => x.OrderId == item.OrderId).ToList())
+                            {
 
 
-                                        @* @foreach (var proizvod in proizvodi.Where(x => x.Id == product.ProductId).ToList())
-                                        {
+                                <li class="list-unstyled  p-1">
 
-                                            <h3 class="card-title fontIN grayBg text-dark rounded-2 p-2">
-                                                Product name : @proizvod.ProductName
-                                            </h3>
-                                        }*@
-                                                                              
-                                        <br /><br />
-                                        <p class="card-text fs-4">
-                                            Price per product : @product.PricePerProduct Eur
-                                        </p>
-                                        <br />
-                                        <p class="card-text fs-4">
-                                            Number Of Items : @product.NumberOfItems
-                                        </p>
-                                        <br />
-                                        <p class="card-text fs-4">
-                                            Total Ammount : @product.TotalAmmount Eur
-                                        </p>
-                                        <br />
+                                    <div class="card  text-center p-2 mt-3">
 
-                                        @{
-                                            GrandTotal = GrandTotal + product.TotalAmmount;
-                                         }
+                                        <div class="card-body">
+
+
+                                            @foreach (var proizvod in proizvodi.Where(x => x.Id == product.ProductId).ToList())
+                                            {
+
+                                                <h3 class="card-title fontIN grayBg text-dark rounded-2 p-2">
+                                                    Product name : @proizvod.ProductName
+                                                </h3>
+                                            }
+
+                                            <br /><br />
+                                            <p class="card-text fs-4">
+                                                Price per product : @product.PricePerProduct Eur
+                                            </p>
+                                            <br />
+                                            <p class="card-text fs-4">
+                                                Number Of Items : @product.NumberOfItems
+                                            </p>
+                                            <br />
+                                            <p class="card-text fs-4">
+                                                Total Ammount : @product.TotalAmmount Eur
+                                            </p>
+                                            <br />
+
+                                            @{
+                                                GrandTotal = GrandTotal + product.TotalAmmount;
+                                            }
+                                        </div>
+
                                     </div>
-                                    
-                                </div>
-                            </li>
-                           
-                        }
-                    </ul>
-                    <p class="card-text fs-4 fw-bold border-dark border-bottom border-end border-1 rounded-2 indigo">
-                        Grand Total : @GrandTotal Eur
-                    </p>
+                                </li>
 
-                </li>
+                            }
+                        </ul>
+                        <p class="card-text fs-4 fw-bold border-dark border-bottom border-end border-1 rounded-2 indigo">
+                            Grand Total : @GrandTotal Eur
+                        </p>
 
+                    </li>
+                </ol>
             }
 
         </ul>
-        
+
     </section>
 
 </div>

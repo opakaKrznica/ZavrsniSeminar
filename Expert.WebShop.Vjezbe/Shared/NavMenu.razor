@@ -46,8 +46,8 @@
 
         @foreach (var item in categories)
         {
-             //if (item.IsHidden == false)
-               // {
+        if (item.IsHidden == false)
+        {
             var link = $"/category/{item.Id}/{item.CategoryName}";
 
             <div class="nav-item px-3">
@@ -55,7 +55,7 @@
                     <span class="oi oi-fire" aria-hidden="true"></span>@item.CategoryName
                 </NavLink>
             </div>
-        //}
+        }
         }
     </nav>
 </div>

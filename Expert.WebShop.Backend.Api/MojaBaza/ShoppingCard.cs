@@ -14,8 +14,6 @@ public partial class ShoppingCard
 
     public string OrderedByEmail { get; set; } = null!;
 
-    public string OrderByAdress { get; set; } = null!;
-   
     public string OrderId { get; set; } = null!;
 
     public int NumberOfItems { get; set; }
