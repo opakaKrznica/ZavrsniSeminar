@@ -76,7 +76,7 @@
         }
     }
 
-    public async Task ChangeRadioValue()
+    private async Task ChangeRadioValue()
     {
         if (category.IsHidden == true)
         {
@@ -86,7 +86,7 @@
         {
             category.IsHidden = true;
         }
-
+        StateHasChanged();
     }
 
     private async Task CategoryEdit()

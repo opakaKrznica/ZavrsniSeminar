@@ -19,11 +19,7 @@
 
     </nav>
 
-    @{
-       
-
-    }
-
+  
 
     <section class="d-flex justify-content-center text-center grayBg mb-5">
     
@@ -53,18 +49,15 @@
                                 <div class="card  text-center p-2 mt-3">
 
                                     <div class="card-body">
-                                       
 
-                                            @*<h3 class="card-title bg-secondary text-dark rounded-2 p-2">
-                                                Product name : @proizvodi.ProductName
-                                </h3>*@
-                                        @foreach (var proizvod in proizvodi.Where(x => x.Id == product.ProductId).ToList())
+
+                                        @* @foreach (var proizvod in proizvodi.Where(x => x.Id == product.ProductId).ToList())
                                         {
 
                                             <h3 class="card-title fontIN grayBg text-dark rounded-2 p-2">
                                                 Product name : @proizvod.ProductName
                                             </h3>
-                                        }
+                                        }*@
                                                                               
                                         <br /><br />
                                         <p class="card-text fs-4">
