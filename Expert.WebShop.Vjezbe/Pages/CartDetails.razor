@@ -38,13 +38,9 @@
 
             @foreach (var item in shoppingCartInMemory.selectedItems.OrderBy(x => x.ProductId))
             {
-
-
-                <li>
-                    
+                <li>                  
 
                         <div class="card  text-center mt-3">
-
 
                             <div class="card-body">
                                 <p class="card-title indigo text-light rounded-2  fs-1 ">
@@ -136,6 +132,10 @@
         await TotalCash();
     }
 
+    public async Task Checkout()
+    {
+        navManager.NavigateTo("/checkout");
+    }
 
     public async Task Decrement(int prodId)
     {
@@ -160,8 +160,6 @@
         await TotalCash();
         StateHasChanged();
     }
-
-
 
     public async Task TotalCash()
     {
@@ -190,8 +188,6 @@
         }
     }
 
-
-
     private async Task DeleteProd(int id)
     {      
         var confirm = await ijsRun.InvokeAsync<bool>("confirm", "You sure for changes?"); /*invokanje JS u C# , odlazi u IF*/
@@ -210,11 +206,6 @@
     {
         navManager.NavigateTo("/");
     }
-
-    public async Task Checkout()
-    {
-        navManager.NavigateTo("/checkout");
-    }
-
+    
 }
 

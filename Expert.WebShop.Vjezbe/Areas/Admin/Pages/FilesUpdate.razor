@@ -13,7 +13,7 @@
 
            <h2 class="pt-2 ">Update files</h2>
 
-             <button type="button" class="bg-secondary rounded-2 text-light m-3 p-2 " @onclick="Return">
+             <button type="button" class="bg-secondary rounded-2 text-light m-3 p-2 " @onclick="()=>Return(product.Id)">
                Back to products
            </button>
       </nav>
@@ -125,9 +125,9 @@
         return images;
     }
 
-    private async void Return()
+    private async void Return(int Id)
     {
-        navManager.NavigateTo("Admin/product-list");
+        navManager.NavigateTo($"/Admin/edit-product/{Id}");
     }
 
 }

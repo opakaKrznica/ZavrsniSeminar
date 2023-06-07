@@ -71,10 +71,6 @@
                 <div class="d-flex justify-content-between pt-3">
                     <button type="submit" class="btn indigo rounded-2 border-dark border-bottom border-end border-2 p-2">Add New</button>
 
-                    <button type="button" class="btn indigo rounded-2 border-dark border-bottom border-end border-2 p-2" @onclick="()=>UpdateFiles(products.Id)">
-                        Upload Files
-                    </button>
-
                     <button type="button" class="btn indigo rounded-2 border-dark border-bottom border-end border-2 p-2" @onclick="Return">
                         Back to products
                     </button>
@@ -129,11 +125,6 @@
             IsError = true;
             StateHasChanged();
         }
-    }
-
-    async void UpdateFiles(int Id)
-    {
-        navManager.NavigateTo($"/Admin/files-update/{Id}");
     }
 
     private async void Return()

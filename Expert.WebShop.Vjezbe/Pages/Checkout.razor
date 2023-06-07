@@ -41,8 +41,8 @@
     public string Email;
     public string ImeOsobe;
     public decimal TotalAmount;
-   
- 
+
+
     public async Task CheckoutItems()
     {
         Guid orderId = Guid.NewGuid();
@@ -54,6 +54,7 @@
             cartItem.NumberOfItems = item.NumberOfItems;
             cartItem.OrderId = orderId;
             cartItem.ProductId = item.ProductId;
+            cartItem.OrderedByName = ImeOsobe;
             cartItem.PricePerProduct = item.Product.ProductPrice;
             cartItem.OrderedByEmail = Email;
             cartItem.ProductDiscount = item.Product.Discount;
@@ -79,10 +80,8 @@
 
             var add = await httpClient.PostAsJsonAsync($"{Constants.BaseUrl}/ShoppingCards", cartItem);
 
-            if (add.IsSuccessStatusCode)
-            {
-                navManager.NavigateTo("/Admin/orders-list");
-            }
+            navManager.NavigateTo("/Admin/orders-list");
+            StateHasChanged();
         }
 
     }
