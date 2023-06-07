@@ -38,36 +38,36 @@
             {
                 if (item.IsHidden == false)
                 {
-                <li>
-                    <div class="card p-sm-3">
+                    <li>
+                        <div class="card p-sm-3">
 
-                        <div>
-                            @{
-                                var images = productImages.Where(x => x.ProductId == item.Id).ToList();
-                                foreach (var image in images)
-                                {
-                                    <img class="img-thumbnail rounded-2 w-75 " src=@image.imagePath alt="neka slika..">
+                            <div>
+                                @{
+                                    var images = productImages.Where(x => x.ProductId == item.Id).ToList();
+                                    foreach (var image in images)
+                                    {
+                                        <img class="img-thumbnail rounded-2 w-75 " src=@image.imagePath alt="neka slika..">
+                                    }
                                 }
-                            }
-                        </div>
+                            </div>
 
-                        <div class="card-body ">
-                            <h5 class="card-title space h2">
-                                @item.ProductName
-                            </h5>
-                            <p class="card-text">
-                                @item.ProductDescription
-                            </p>
-                            <p class="card-text fs-5">
-                                Price:  @item.ProductPrice  Eur
-                            </p>
+                            <div class="card-body ">
+                                <h5 class="card-title space h2">
+                                    @item.ProductName
+                                </h5>
+                                <p class="card-text">
+                                    @item.ProductDescription
+                                </p>
+                                <p class="card-text fs-5">
+                                    Price:  @item.ProductPrice  Eur
+                                </p>
+                            </div>
+                            <button type="button" class="btn btn-success p-2" @onclick="()=>GoToDetails(item.Id)">DETAILS</button>
                         </div>
-                        <button type="button" class="btn btn-success p-2" @onclick="()=>GoToDetails(item.Id)">DETAILS</button>
-                    </div>
-                </li>
-                <br />
-                <br />
-            }
+                    </li>
+                    <br />
+                    <br />
+                }
             }
         </ul>
     </section>
@@ -105,7 +105,6 @@
         navManager.LocationChanged += LocationChanged;
 
     }
-
 
 
     public async Task<Category> GetCategory(int categoryId)

@@ -19,81 +19,77 @@
 
     </nav>
 
-
-
     <section class="d-flex justify-content-center text-center grayBg mb-5">
 
-        <ul class="list-unstyled descending">
+        <ul class="list-unstyled ">
 
             @foreach (var item in distinctOrders)
             {
                 decimal GrandTotal = 0;
-                <ol>
-                    <li class="my-5 bg-light">
-                        <div class="card  text-center p-2 m-3">
-                            <p class="card-text fs-4 bg-secondary spec2 p-3 text-decoration-underline">Order Id: @item.OrderId</p>
 
-                            <p class="card-text fs-4">Name : @item.OrderedByName</p>
-                            <p class="card-text fs-4">Mail : @item.OrderedByEmail</p>
+                <li class=" bg-light mb-5 px-2 ">
+                    <div class="card  text-center ">
+                        <p class="card-text fs-4 indigo spec2 p-3 text-decoration-underline border-dark border-bottom border-end border-1 rounded-2">Order Id: @item.OrderId</p>
 
-                        </div>
-                        <ul class="list-unstyled">
+                        <p class="card-text fs-4">Name : @item.OrderedByName</p>
+                        <p class="card-text fs-4">Mail : @item.OrderedByEmail</p>
 
-                            @foreach (var product in ordersList.Where(x => x.OrderId == item.OrderId).ToList())
-                            {
+                    </div>
+                    <ul class="list-unstyled">
 
-
-                                <li class="list-unstyled  p-1">
-
-                                    <div class="card  text-center p-2 mt-3">
-
-                                        <div class="card-body">
+                        @foreach (var product in ordersList.Where(x => x.OrderId == item.OrderId).ToList())
+                        {
 
 
-                                            @foreach (var proizvod in proizvodi.Where(x => x.Id == product.ProductId).ToList())
-                                            {
+                            <li class="list-unstyled">
 
-                                                <h3 class="card-title fontIN grayBg text-dark rounded-2 p-2">
-                                                    Product name : @proizvod.ProductName
-                                                </h3>
-                                            }
+                                <div class="card  text-center p-2 mt-3">
 
-                                            <br /><br />
-                                            <p class="card-text fs-4">
-                                                Price per product : @product.PricePerProduct Eur
-                                            </p>
-                                            <br />
-                                            <p class="card-text fs-4">
-                                                Number Of Items : @product.NumberOfItems
-                                            </p>
-                                            <br />
-                                            <p class="card-text fs-4">
-                                                Total Ammount : @product.TotalAmmount Eur
-                                            </p>
-                                            <br />
+                                    <div class="card-body">
 
-                                            @{
-                                                GrandTotal = GrandTotal + product.TotalAmmount;
-                                            }
-                                        </div>
 
+                                        @foreach (var proizvod in proizvodi.Where(x => x.Id == product.ProductId).ToList())
+                                        {
+
+                                            <h3 class="card-title fontIN grayBg text-dark rounded-2 p-2">
+                                                Product name : @proizvod.ProductName
+                                            </h3>
+                                        }
+
+                                        <br /><br />
+                                        <p class="card-text fs-4">
+                                            Price per product : @product.PricePerProduct Eur
+                                        </p>
+                                        <p class="card-text fs-4">
+                                            Discount : @product.ProductDiscount %
+                                        </p>
+                                        <p class="card-text fs-4">
+                                            Number Of Items : @product.NumberOfItems pcs
+                                        </p>
+                                        <br />
+                                        <p class="card-text fs-4 fw-bold">
+                                            Total Ammount : @product.TotalAmmount Eur
+                                        </p>
+                                        <br />
+
+                                        @{
+                                            GrandTotal = GrandTotal + product.TotalAmmount;
+                                        }
                                     </div>
-                                </li>
 
-                            }
-                        </ul>
-                        <p class="card-text fs-4 fw-bold border-dark border-bottom border-end border-1 rounded-2 indigo">
-                            Grand Total : @GrandTotal Eur
-                        </p>
+                                </div>
+                            </li>
 
-                    </li>
-                </ol>
+                        }
+                    </ul>
+                    <p class="card-text fs-4 fw-bold border-dark border-bottom border-end border-1 rounded-2 py-2 indigo">
+                        Grand Total : @GrandTotal Eur
+                    </p>
+
+                </li>
             }
-
         </ul>
-
     </section>
-
 </div>
 
 

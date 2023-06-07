@@ -1,4 +1,4 @@
-﻿@page "/product-details/{id:int}"  
+﻿@page "/product-details/{id:int}"
 @inject HttpClient httpClient;
 @inject NavigationManager navManager;
 @inject ShoppingCartInMemory shoppingCart;
@@ -9,40 +9,40 @@
 <div class="container-md mb-5 Width ">
 
     <nav class="nav indigo d-flex justify-content-between sticky-top ">
-       <h2 class=" text-light  p-3">Details</h2>
+        <h2 class=" text-light  p-3">Details</h2>
 
         <button type="button" class="btn-secondary  rounded-2 m-3 p-2 " @onclick="()=>Return()">
-        Go Back
-       </button>
+            Go Back
+        </button>
 
     </nav>
 
 
     <section class="grayBg pb-4 d-flex justify-content-center p-4">
-    <div class="card  text-center text-dark  my-3" style="width: 32rem">
-        <div class="card-body">
+        <div class="card  text-center text-dark  my-3" style="width: 32rem">
+            <div class="card-body">
                 <h3 class="card-title indigo text-light border-dark border-bottom border-end border-2 rounded-2 p-2">
-                 @productDetails.ProductName
-            </h3>
-            <br />
-            <p class="card-text fs-5">
-                Description : @productDetails.ProductDescription
-            </p>
-            <br />
-            <p class="card-text fs-4">
-                Unit Price : @productDetails.ProductPrice Eur
-            </p>
-            
-            <p class="card-text fs-4">
-                Discount : @productDetails.Discount  %
-            </p>
-            
+                    @productDetails.ProductName
+                </h3>
+                <br />
+                <p class="card-text fs-5">
+                    Description : @productDetails.ProductDescription
+                </p>
+                <br />
+                <p class="card-text fs-4">
+                    Unit Price : @productDetails.ProductPrice Eur
+                </p>
+
+                <p class="card-text fs-4">
+                    Discount : @productDetails.Discount  %
+                </p>
+
                 @{
                     if (productDetails.Discount < 1)
-                    {                                              
+                    {
                         <p class="card-text fs-4 fw-bold">
                             Discount Price : @productDetails.ProductPrice Eur
-                        </p>                       
+                        </p>
                     }
                     else
                     {
@@ -56,14 +56,15 @@
                         </p>
                         <br />
                     }
-                   
-                }
-               
-            <button class="btn btn-success p-3 fs-5 spec space" @onclick="()=>shoppingCart.AddToShoppingCart(productDetails.Id, navManager)">
-                ADD TO CART</button>
 
+                }
+
+                <button class="btn btn-success p-3 fs-5 spec space" @onclick="()=>shoppingCart.AddToShoppingCart(productDetails.Id, navManager)">
+                    ADD TO CART
+                </button>
+
+            </div>
         </div>
-    </div>
     </section>
 </div>
 

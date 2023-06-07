@@ -9,9 +9,5 @@ namespace Expert.WebShop.Vjezbe.models
 
         public int NumberOfItems { get; set; }
 
-       
-
-
-
     }
 }

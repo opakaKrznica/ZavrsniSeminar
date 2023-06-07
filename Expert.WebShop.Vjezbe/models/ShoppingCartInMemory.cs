@@ -10,19 +10,13 @@ namespace Expert.WebShop.Vjezbe.models
         private readonly HttpClient _httpClient;
         public  readonly NavigationManager navManager;
 
-        public List<ShoppingCart>selectedItems { get; set; } = new ();   // ovo je krace od- new List<Products>()
-                                                                     // -on ga ovako prepozna
+        public List<ShoppingCart>selectedItems { get; set; } = new ();   
         public ShoppingCartInMemory(HttpClient httpClient)   //konstruktor klase,prvo mu damo ime
         {
             _httpClient = httpClient; 
 
         }
 
-        /// <summary>
-        /// Ovo je metoda za dodavanje u kosaricu
-        /// </summary>
-        /// <param name="productId"></param>
-        /// <returns></returns>
      public async Task AddToShoppingCart(int productId, NavigationManager navManager)
         {
             if(selectedItems.FirstOrDefault(x => x.ProductId == productId) == null)

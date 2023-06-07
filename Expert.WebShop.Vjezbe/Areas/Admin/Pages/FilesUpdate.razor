@@ -38,13 +38,15 @@
                 var images = productImages.Where(x => x.ProductId == product.Id).ToList();
                 foreach (var image in images)
                 {
-               <img class="card-img-top img-thumbnail mx-auto d-block w-75 " src=@image.imagePath alt="neka slika..">
+                  <img class="card-img-top img-thumbnail mx-auto d-block w-75 " src=@image.imagePath alt="neka slika..">
                 }
             }
 
         </div>
    </div>
 </div>
+
+
 @code {
     [Parameter]
     public int Id { get; set; }
@@ -65,7 +67,7 @@
 
     private async void OnSubmit()
     {
-        if(selectedFiles.Count == 0)
+        if (selectedFiles.Count == 0)
         {
             await ijsRun.InvokeVoidAsync("alert", "Nothing choosen, try harder!!!");
         }
@@ -82,15 +84,15 @@
             uploadFile.FileContent = ms.ToArray();
             ms.Close();
 
-            var upload = await Http.PostAsJsonAsync<UploadedFiles> ($"{Constants.BaseUrl}/FileUpload", uploadFile);
+            var upload = await Http.PostAsJsonAsync<UploadedFiles>($"{Constants.BaseUrl}/FileUpload", uploadFile);
 
             if (upload.IsSuccessStatusCode)
             {
                 await ijsRun.InvokeVoidAsync("alert", "You successfully Uploaded files!!!");
             }
-           
+
         }
-        
+
         this.StateHasChanged();
     }
 
