@@ -21,7 +21,7 @@ namespace Expert.WebShop.Vjezbe.models
         {
             if(selectedItems.FirstOrDefault(x => x.ProductId == productId) == null)
             { 
-            var result= await _httpClient.GetAsync($"https://expertshopapi.azurewebsites.net/api/Products/{productId}");
+            var result= await _httpClient.GetAsync($"{Constants.BaseUrl}/Products/{productId}");
 
             if(result.IsSuccessStatusCode)  
             {
